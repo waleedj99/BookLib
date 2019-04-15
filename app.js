@@ -4,10 +4,15 @@ app.set('view engine', 'ejs');
 var bodyParser = require('body-parser')
 const mongo = require('mongodb').MongoClient
 const url = 'mongodb://localhost:27017'
+var assert = require('assert');
+var fs = require('fs');
+
+
 
 app.use(bodyParser.urlencoded({ extended: false }))
-
-
+app.get('/',function(req,res){
+    res.render('pages/index.ejs')
+})
 app.get('/register', function (req, res) {
     var tagline = ''
     res.render('pages/register.ejs', {
@@ -19,14 +24,54 @@ app.get('/register', function (req, res) {
 app.get('/login', function (req, res) {
     res.render('pages/login.ejs');
 })
-
-
-app.get('/dup', function (req, res) {
-    res.send("Username already Exists");
+app.get('/upload', function (req, res){
+    res.render('pages/upload')
 })
-
-
-
+app.post('/upload', function (req, res) {
+    console.log(req.body.myFile.value)
+    res.render('pages/upload')
+    /*res.sendFile(__dirname + '/register.html')
+    mongo.MongoClient.connect(url, function (error, client) {
+        assert.ifError(error);
+        var db = client.db('upload')
+        var bucket = new mongo.GridFSBucket(db, {
+            chunkSizeBytes: 1024,
+            bucketName: 'songs'
+        });
+        fs.createReadStream('./').
+            pipe(bucket.openUploadStream('module5 (2).docx')).
+            on('error', function (error) {
+                assert.ifError(error);
+            }).
+            on('finish', function () {
+                console.log('done!');
+                //process.exit(0);
+            });
+        //client.close()
+    });*/
+})
+app.get('/download', function (req, res) {
+    res.sendFile(__dirname + '/textbook.html')
+    mongo.MongoClient.connect(url, function (error, client) {
+        assert.ifError(error);
+        var db = client.db('upload')
+        //var bucket = new mongodb.GridFSBucket(db);
+        var bucket = new mongo.GridFSBucket(db, {
+            chunkSizeBytes: 1024,
+            bucketName: 'songs'
+        });
+        bucket.openDownloadStreamByName('module5 (2).docx').
+            pipe(fs.createWriteStream('./mod.docx')).
+            on('error', function (error) {
+                assert.ifError(error);
+            }).
+            on('finish', function () {
+                console.log('done!');
+                //process.exit(0);
+            });
+        //client.close()
+    })
+})
 
 app.post('/login', function (req, res) {
 
@@ -48,9 +93,6 @@ app.post('/login', function (req, res) {
         client.close();
     })
 })
-
-
-//NEED TO FIND A WAY TO AVOID DUPLICATES
 
 app.post('/register', function (req, res) {
 

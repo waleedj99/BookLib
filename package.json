@@ -7,9 +7,13 @@
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "gridfs-stream": "^1.1.1",
+    "jsdom": "^14.0.0",
     "mongodb": "^3.2.3",
-    "mongoose": "^5.4.19",
-    "nodemon": "^1.18.10"
+    "mongoose": "^5.5.1",
+    "nodemon": "^1.18.10",
+    "path": "^0.12.7"
   },
   "devDependencies": {},
   "scripts": {
