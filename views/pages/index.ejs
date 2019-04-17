@@ -90,9 +90,18 @@
 </div>
 
 <table  align="center" cellpadding="40" style="margin-top: 5%;">
+  <% if(files){ %>
+  <%  var pdf = [] %>
+  <% files.forEach(function(file) { %>
+    <% if(file.isPdf) { %>
+    <% pdf.push(file)%>
+    <img src="image/<%= file.filename %>" alt="">
+    <% } else { %>
+    <% }})} %>
 <tr>
   <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
+    <% console.log( pdf[1].filename) %>
+  <p> <%= pdf[1].filename %></p></td>
   <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
   <p>text book name goes here ....maybe also some discription </p></td>
   <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
