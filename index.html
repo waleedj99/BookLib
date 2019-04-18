@@ -99,40 +99,21 @@
     <% } else { %>
     <% }})} %>
 <tr>
-  <td>
-  <form action="pdf/<%= pdf[1].filename %>" method="GET">
-  <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p> <%= pdf[1].filename %></p>
-  <button type="submit" value='a' </button>OPEN</button>
-  </form>
-  </td>
-  <td><form action="pdf/<%= pdf[1].filename %>" method="GET">
-  <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p> <%= pdf[pdf.length-5].filename %></p>
-  <button type="submit" value='a' </button>OPEN</button>
-  </form></td>
-  <td ><form action="pdf/<%= pdf[pdf.length-1].filename %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-    <% console.log( pdf[pdf.length -1].filename) %>
-    <p> <%= pdf[pdf.length-4].filename %></p>
-    <button type="submit" value='a' </button>OPEN </button> </form></td>
+  <td class = 'onpress'><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+    <% console.log( pdf[1].filename) %>
+  <p> <%= pdf[1].filename %></p></td>
+  <td class = 'onpress'><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+  <td class = 'onpress'><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
 </tr>
 <tr>
-  <td><form action="pdf/<%= pdf[pdf.length-1].filename %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-    
-    <p> <%= pdf[pdf.length-3].filename %></p>
-    <button type="submit" value='a' </button>OPEN </button> </form></td>
-  <td><form action="pdf/<%= pdf[pdf.length-1].filename %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-    
-    <p> <%= pdf[pdf.length-2].filename %></p>
-    <button type="submit" value='a' </button>OPEN </button> </form></td>
-  <td><form action="pdf/<%= pdf[pdf.length-1].filename %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-    
-    <p> <%= pdf[pdf.length-1].filename %></p>
-    <button type="submit" value='a' </button>OPEN </button> </form></td>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
 </tr>
 
 </table>

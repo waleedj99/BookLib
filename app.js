@@ -87,18 +87,19 @@ app.get('/login', function (req, res) {
     res.render('pages/login.ejs');
 })
 
-app.get('/image/:filename', (req, res) => {
+app.get('/pdf/:filename', (req, res) => {
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
         // Check if file
         console.log(file)
         if (!file || file.length === 0) {
+            console.log(err)
             return res.status(404).json({
                 err: 'No file exists'
             });
         }
 
         // Check if pdf
-        if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+        if (file.contentType === 'application/pdf' || file.contentType === 'application/pdf') {
             // Read output to browser
             const readstream = gfs.createReadStream(file.filename);
             readstream.pipe(res);
@@ -114,7 +115,7 @@ app.get('/upload', function (req, res){
     res.render('pages/upload')
 })
 app.post('/upload', upload.single('myFile'), (req, res) => {
-    res.json({file:req.file})
+    res.redirect('/')
 })
 app.get('/download', function (req, res) {
     res.sendFile(__dirname + '/textbook.html')
