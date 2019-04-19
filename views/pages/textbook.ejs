@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Textbooks</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<style>
+button{
+  background-color:#FFFBE6;
+  border:none;
+}
+
+</style>
+
+
+</head>
+
+<body style="background-color:#FFFBE6;">
+
+<%- include('../partials/navigation') %>
+<br>
+<br><br>
+<ul class="list-inline" style="padding: 10px; text-align:center;background-color:#FFFBE6;">
+  <li class="list-inline-item" style="margin: auto 62px;"><button><u style="color:#356859;"><b>3rd Semester<b></u></button></li>
+  <li class="list-inline-item" style="margin: auto 62px;"><button>4th Semester</button></li>
+  <li class="list-inline-item" style="margin: auto 62px;"><button>5th Semester</button></li>
+  <li class="list-inline-item" style="margin: auto 62px;"><button>6th Semester</button></li>
+  <li class="list-inline-item" style="margin: auto 62px;"><button>7th Semester</button></li>
+  <li class="list-inline-item" style="margin: auto 62px;"><button>8th Semester</button></li>
+</ul>
+
+
+<div class="container">
+<table  align="center" cellpadding="40" style="margin-top: 5%;"><u>
+  <% if(files){ %>
+  <%  var tb = [] %>
+  <% files.forEach(function(file) { %>
+  <% if(file.isTB) { %>
+  <% tb.push(file)%>
+  <% } else { %>
+  <% }})} %>
+<tr>
+  <td><form action="pdf/<%= tb[1].filename %>" method="GET">
+    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+    <p> <%= tb[1].filename %></p>
+    <button type="submit" value='a' </button>OPEN </button> </form></td>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+</tr>
+<tr>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+</tr>
+<tr>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+</tr>
+<tr>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+  <p>text book name goes here ....maybe also some discription </p></td>
+</tr>
+</table>
+
+</div>
+</body>
+</html>

@@ -1,7 +1,19 @@
 <html>
     <body>
         <form action = "/upload" method="POST" enctype="multipart/form-data">
-            <input type="file" name="myFile" id = "myFile">
+            Sem:<br> 
+            <select name = "semester">
+                <option  value="1">I</option>
+                <option  value="2">II</option>
+                <option  value="3">III</option>
+                <option  value="4">IV</option>
+            </select>
+            <br>
+            Subject:<br>
+            <input type="text" name = "subject" placeholder="Enter Subject"><br>
+            <input type="radio" name="category" value="textbook"> Textbook<br>
+            <input type="radio" name="category" value="notes"> Notes<br>
+            <input type="file" name="myFile" id = "myFile"><br>
             <input type = "submit" value=" Upload "></input>
         </form>
         

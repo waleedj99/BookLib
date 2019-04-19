@@ -61,6 +61,27 @@ app.get('/register', function (req, res) {
         tagline: tagline
     }); 
 })
+app.get('/textbook',(req,res)=>{
+    gfs.files.find().toArray((err, files) => {
+
+        // Check if files
+        if (!files || files.length === 0) {
+
+            res.render('pages/textbook', { files: false })
+        } else {
+            files.map(file => {
+                if (file.contentType === 'application/pdf' && file.category === "textbook") {
+                    file.isTB = true;
+                } else {
+                    file.isTB = false;
+                }
+            });
+            res.render('pages/textbook', { files: files })
+        }
+    });
+    
+    
+})
 app.get('/', (req, res) => {
     
     gfs.files.find().toArray((err, files) => {
@@ -115,8 +136,31 @@ app.get('/upload', function (req, res){
     res.render('pages/upload')
 })
 app.post('/upload', upload.single('myFile'), (req, res) => {
-    res.redirect('/')
+    mongo.connect(url, (err, client) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        console.log("Connexted bois")
+        var db = client.db('admin')
+        //console.log(db)
+        var collection = db.collection("uploads.files")
+        //console.log(collection)
+        console.log("req is " + req.body.semester)
+        collection.updateOne({ filename: req.file.filename }, { $set: { 
+            semester: req.body.semester,
+            subject: req.body.subject,
+            category:req.body.category} })
+
+        collection.findOne({ filename: "al-masri2018 (1).pdf" }, (err, item) => {
+            console.log(item.body)
+        })
+        client.close();
+        res.redirect('/')
+        
+    })    
 })
+
 app.get('/download', function (req, res) {
     res.sendFile(__dirname + '/textbook.html')
     mongo.MongoClient.connect(url, function (error, client) {
