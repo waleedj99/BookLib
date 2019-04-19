@@ -61,9 +61,28 @@ app.get('/register', function (req, res) {
         tagline: tagline
     }); 
 })
-app.get('/textbook',(req,res)=>{
+app.get('/notes',(req,res)=>{
     gfs.files.find().toArray((err, files) => {
 
+        // Check if files
+        if (!files || files.length === 0) {
+
+            res.render('pages/notes', { files: false })
+        } else {
+            files.map(file => {
+                if (file.contentType === 'application/pdf' && file.category === "notes") {
+                    file.isNote = true;
+                } else {
+                    file.isNote = false;
+                }
+            });
+            res.render('pages/notes', { files: files })
+        }
+    });
+
+})
+app.get('/textbook',(req,res)=>{
+    gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
 
@@ -79,8 +98,6 @@ app.get('/textbook',(req,res)=>{
             res.render('pages/textbook', { files: files })
         }
     });
-    
-    
 })
 app.get('/', (req, res) => {
     
