@@ -81,6 +81,7 @@ app.get('/notes',(req,res)=>{
     });
 
 })
+
 app.get('/textbook',(req,res)=>{
     gfs.files.find().toArray((err, files) => {
         // Check if files
@@ -89,7 +90,7 @@ app.get('/textbook',(req,res)=>{
             res.render('pages/textbook', { files: false })
         } else {
             files.map(file => {
-                if (file.contentType === 'application/pdf' && file.category === "textbook") {
+                if (file.contentType === 'application/pdf' && file.category === "textbook" ) {
                     file.isTB = true;
                 } else {
                     file.isTB = false;
@@ -105,7 +106,6 @@ app.get('/', (req, res) => {
         
         // Check if files
         if (!files || files.length === 0) {
-            
             res.render('pages/index', { files: false });
         } else {
             files.map(file => {

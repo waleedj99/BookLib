@@ -24,15 +24,7 @@ button{
 <%- include('../partials/navigation') %>
 <br>
 <br><br>
-<ul class="list-inline" style="padding: 10px; text-align:center;background-color:#FFFBE6;">
-  <li class="list-inline-item" style="margin: auto 62px;"><button><u style="color:#356859;"><b>3rd Semester<b></u></button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>4th Semester</button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>5th Semester</button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>6th Semester</button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>7th Semester</button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>8th Semester</button></li>
-</ul>
-
+<%- include('../partials/semnav') %>
 
 <div class="container">
 <table  align="center" cellpadding="40" style="margin-top: 5%;"><u>
@@ -43,34 +35,39 @@ button{
   <% tb.push(file)%>
   <% } else { %>
   <% }})} %>
-<tr>
-  <td><form action="pdf/<%= tb[1].filename %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-    <p> <%= tb[1].filename %></p>
-    <button type="submit" value='a' </button>OPEN </button> </form></td>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
+<tr id = "uP">
+  
 </tr>
-<tr>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-</tr>
-<tr>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-</tr>
-<tr>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
+<tr id="CO">
+  
 </tr>
 </table>
 
 </div>
+<script >
+  
+  <% for(var i =0;i<= tb.length-1 ;i++){ %>
+  
+  //console.log(itm)
+  var cln = document.createElement('td')
+  cln.innerHTML = `<form action="pdf/<%= tb[i].filename %>" class="book" method="GET">
+    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+    <p> <%= tb[i].filename %><br><%= tb[i].subject %></p>
+    <button type="submit" value='a'>OPEN </button> </form>`
+  //cln.getElementsByTagName("p")[0].innerHTML = "<%= tb[i].filename %>";
+  console.log(cln.getElementsByTagName("p"))
+  cln.action = "pdf/<%= tb[i].filename %>";
+  console.log("cln is"+'<%= tb[i].filename %>')
+   //<%= tb[i].filename %>"
+  //var td  = document.createElement('td')
+  var par  = document.getElementById('<%= tb[i].subject %>')
+  console.log('sub is'+'<%= tb[i].subject %>')
+  //console.log(par)
+  
+  //td.appendChild(cln)
+  par.appendChild(cln);
+  
+  <%}%>
+</script>
 </body>
 </html>

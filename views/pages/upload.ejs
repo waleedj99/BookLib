@@ -10,7 +10,16 @@
             </select>
             <br>
             Subject:<br>
-            <input type="text" name = "subject" placeholder="Enter Subject"><br>
+            
+            <input list="subjects" name="subject" placeholder="Enter Subject" autocomplete="off">
+            <datalist id="subjects">
+                <option value="Mathematics 4">
+                <option value="Microprocessors">
+                <option value="Operating System">
+                <option value="Linux system programing">
+                <option value="Algorithm Design">
+            </datalist>
+            <br>
             <input type="radio" name="category" value="textbook"> Textbook<br>
             <input type="radio" name="category" value="notes"> Notes<br>
             <input type="file" name="myFile" id = "myFile"><br>
