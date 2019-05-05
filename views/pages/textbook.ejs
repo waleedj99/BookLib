@@ -27,7 +27,7 @@ button{
 <%- include('../partials/semnav') %>
 
 <div class="container">
-<table  align="center" cellpadding="40" style="margin-top: 5%;"><u>
+<table  align="center" cellpadding="40" style="margin-top: 5%;">
   <% if(files){ %>
   <%  var tb = [] %>
   <% files.forEach(function(file) { %>
@@ -35,20 +35,26 @@ button{
   <% tb.push(file)%>
   <% } else { %>
   <% }})} %>
-<tr id = "uP">
+
   
-</tr>
-<tr id="CO">
-  
-</tr>
+
 </table>
 
 </div>
 <script >
   
-  <% for(var i =0;i<= tb.length-1 ;i++){ %>
+  <% for (var i = 0; i <= subject.length-1;i++){%>
   
-  //console.log(itm)
+    
+    var tr = document.createElement('tr')    
+    tr.innerHTML = "<td><%=subject[i]%></td>"
+    tr.id = '<%=subject[i]%>'
+    var tab = document.getElementsByTagName("table")[0]
+    tab.appendChild(tr)
+  <%}%>
+
+
+  <% for(var i =0;i<= tb.length-1 ;i++){ %>
   var cln = document.createElement('td')
   cln.innerHTML = `<form action="pdf/<%= tb[i].filename %>" class="book" method="GET">
     <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
@@ -56,15 +62,14 @@ button{
     <button type="submit" value='a'>OPEN </button> </form>`
   //cln.getElementsByTagName("p")[0].innerHTML = "<%= tb[i].filename %>";
   console.log(cln.getElementsByTagName("p"))
+  //console.log('<%=tb%>')
   cln.action = "pdf/<%= tb[i].filename %>";
   console.log("cln is"+'<%= tb[i].filename %>')
    //<%= tb[i].filename %>"
   //var td  = document.createElement('td')
-  var par  = document.getElementById('<%= tb[i].subject %>')
+  if(document.getElementById('<%= tb[i].subject %>') != undefined)
+    var par  = document.getElementById('<%= tb[i].subject %>')
   console.log('sub is'+'<%= tb[i].subject %>')
-  //console.log(par)
-  
-  //td.appendChild(cln)
   par.appendChild(cln);
   
   <%}%>

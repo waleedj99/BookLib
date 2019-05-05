@@ -82,21 +82,46 @@ app.get('/notes',(req,res)=>{
 
 })
 
+
 app.get('/textbook',(req,res)=>{
+    
     gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
 
-            res.render('pages/textbook', { files: false })
+            res.render('pages/textbook', { files: false})
         } else {
             files.map(file => {
-                if (file.contentType === 'application/pdf' && file.category === "textbook" ) {
+                if (file.contentType === 'application/pdf' && file.category === "textbook" && file.semester === req.query.sem) {
                     file.isTB = true;
                 } else {
                     file.isTB = false;
                 }
             });
-            res.render('pages/textbook', { files: files })
+            let subject = ['3subject1', 'subject2', 'subject3']
+            switch (req.query.sem) {
+                case '3':
+                    res.render('pages/textbook', { files: files , subject:['uP','CO','subject3']})
+                    break;
+                case '4':
+                    res.render('pages/textbook', { files: files, subject: ['4subject1', 'subject2', 'subject3'] })
+                    break;
+                case '5':
+                    res.render('pages/textbook', { files: files, subject: ['5subject1', 'subject2', 'subject3'] })
+                    break;
+                case '6':
+                    res.render('pages/textbook', { files: files, subject: ['6subject1', 'subject2', 'subject3'] })
+                    break;
+                case '7':
+                    res.render('pages/textbook', { files: files, subject: ['7subject1', 'subject2', 'subject3'] })
+                    break;
+                case '8':
+                    res.render('pages/textbook', { files: files, subject: subject})
+                    break;
+                default:
+                    res.render('pages/textbook', { files: files })
+            }
+            
         }
     });
 })
