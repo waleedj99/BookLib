@@ -44,8 +44,6 @@ button{
 <script >
   
   <% for (var i = 0; i <= subject.length-1;i++){%>
-  
-    
     var tr = document.createElement('tr')    
     tr.innerHTML = "<td><%=subject[i]%></td>"
     tr.id = '<%=subject[i]%>'
@@ -56,7 +54,7 @@ button{
 
   <% for(var i =0;i<= tb.length-1 ;i++){ %>
   var cln = document.createElement('td')
-  cln.innerHTML = `<form action="pdf/<%= tb[i].filename %>" class="book" method="GET">
+  cln.innerHTML = `<form action="http://localhost:3000/pdf/<%= tb[i].filename %>" class="book" method="GET">
     <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
     <p> <%= tb[i].filename %><br><%= tb[i].subject %></p>
     <button type="submit" value='a'>OPEN </button> </form>`

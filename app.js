@@ -70,13 +70,35 @@ app.get('/notes',(req,res)=>{
             res.render('pages/notes', { files: false })
         } else {
             files.map(file => {
-                if (file.contentType === 'application/pdf' && file.category === "notes") {
+                if (file.contentType === 'application/pdf' && file.category === "notes" && file.semester === req.query.sem) {
                     file.isNote = true;
                 } else {
                     file.isNote = false;
                 }
             });
-            res.render('pages/notes', { files: files })
+            let subject = ['3subject1', 'subject2', 'subject3']
+            switch (req.query.sem) {
+                case '3':
+                    res.render('pages/notes', { files: files, subject: ['uP', 'CO', 'subject3'] })
+                    break;
+                case '4':
+                    res.render('pages/notes', { files: files, subject: ['Algorithm Design', 'uP', 'subject3'] })
+                    break;
+                case '5':
+                    res.render('pages/notes', { files: files, subject: ['CO', 'subject2', 'subject3'] })
+                    break;
+                case '6':
+                    res.render('pages/notes', { files: files, subject: ['6subject1', 'subject2', 'subject3'] })
+                    break;
+                case '7':
+                    res.render('pages/notes', { files: files, subject: ['7subject1', 'subject2', 'subject3'] })
+                    break;
+                case '8':
+                    res.render('pages/notes', { files: files, subject: subject })
+                    break;
+                default:
+                    res.render('pages/notes', { files: files })
+            }
         }
     });
 
@@ -107,7 +129,7 @@ app.get('/textbook',(req,res)=>{
                     res.render('pages/textbook', { files: files, subject: ['4subject1', 'subject2', 'subject3'] })
                     break;
                 case '5':
-                    res.render('pages/textbook', { files: files, subject: ['5subject1', 'subject2', 'subject3'] })
+                    res.render('pages/textbook', { files: files, subject: ['CO', 'subject2', 'subject3'] })
                     break;
                 case '6':
                     res.render('pages/textbook', { files: files, subject: ['6subject1', 'subject2', 'subject3'] })

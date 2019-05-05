@@ -24,18 +24,11 @@ button{
 <%- include('../partials/navigation') %>
 <br>
 <br><br>
-<ul class="list-inline" style="padding: 10px; text-align:center;background-color:#FFFBE6;">
-  <li class="list-inline-item" style="margin: auto 62px;"><button><u style="color:#356859;"><b>3rd Semester<b></u></button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>4th Semester</button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>5th Semester</button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>6th Semester</button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>7th Semester</button></li>
-  <li class="list-inline-item" style="margin: auto 62px;"><button>8th Semester</button></li>
-</ul>
+<%- include('../partials/semnav') %>
 
 
 <div class="container">
-<table  align="center" cellpadding="40" style="margin-top: 5%;"><u>
+<table  align="center" cellpadding="40" style="margin-top: 5%;">
   <% if(files){ %>
   <%  var nt = [] %>
   <% files.forEach(function(file) { %>
@@ -43,34 +36,40 @@ button{
   <% nt.push(file)%>
   <% } else { %>
   <% }})} %>
-<tr>
-  <td><form action="pdf/<%= nt[1].filename %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-    <p> <%= nt[1].filename %></p>
-    <button type="submit" value='a' </button>OPEN </button> </form></td>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-</tr>
-<tr>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-</tr>
-<tr>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-</tr>
-<tr>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-  <td><img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p>text book name goes here ....maybe also some discription </p></td>
-</tr>
+
+
 </table>
 
 </div>
+<script>
+
+  <% for(var i = 0; i <= subject.length - 1; i++) {%>  
+    console.log('l')
+    var tr = document.createElement('tr')
+    tr.innerHTML = "<td><%=subject[i]%></td>"
+    tr.id = '<%=subject[i]%>'
+    var tab = document.getElementsByTagName("table")[0]
+    tab.appendChild(tr)
+  <%}%>
+    
+  <% for(var i = 0; i <= nt.length - 1; i++) { %>
+    var cln = document.createElement('td')
+    cln.innerHTML = `<form action="http://localhost:3000/pdf/<%= nt[i].filename %>" class="book" method="GET">
+    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+    <p> <%= nt[i].filename %><br><%= nt[i].subject %></p>
+    <button type="submit" value='a'>OPEN </button> </form>`
+    //cln.getElementsByTagName("p")[0].innerHTML = "<%= nt[i].filename %>";
+    //console.log(cln.getElementsByTagName("p"))
+    //console.log('<%=nt%>')
+    cln.action = "pdf/<%= nt[i].filename %>";
+    console.log("cln is" + '<%= nt[i].subject %>')
+    //<%= nt[i].filename %>"
+    //var td  = document.createElement('td')
+    if (document.getElementById('<%= nt[i].subject %>') != undefined)
+      var par = document.getElementById('<%= nt[i].subject %>')
+    console.log('sub is' + '<%= nt[i].subject %>')
+    par.appendChild(cln);
+  <%}%>
+</script>
 </body>
 </html>
