@@ -15,6 +15,10 @@
     max-height:20em;
     min-height: 20em;
   }
+  book{
+     height: 15%;
+     width: 12%;
+  }
 </style>
 
 
@@ -69,34 +73,34 @@
 <tr>
   <td>
   <form action="pdf/<%= pdf[1].filename %>" method="GET">
-  <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p> <%= pdf[1].filename %></p>
+  <img class="image-fluid float-left" class="image-fluid rounded"  style = "height: 15%;width: 12% " src="tb.png" alt="please reload...">
+  <p> <%= pdf[1].filename %><br><%= pdf[1].subject %></p>
   <button type="submit" value='a'>OPEN</button>
   </form>
   </td>
   <td><form action="pdf/<%= pdf[1].filename %>" method="GET">
-  <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-  <p> <%= pdf[pdf.length-5].filename %></p>
+  <img class="image-fluid float-left" class="image-fluid rounded"   style = "height: 15%;width: 12% "src="tb.png" alt="please reload...">
+  <p> <%= pdf[pdf.length-5].filename %><br><%= pdf[pdf.length-5].subject %></p>
   <button type="submit" value='a' >OPEN</button>
   </form></td>
   <td ><form action="pdf/<%= pdf[pdf.length-4].filename  %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-    <p> <%= pdf[pdf.length-4].filename %></p>
+    <img class="image-fluid float-left" class="image-fluid rounded" style = "height: 15%;width: 12% " src="tb.png" alt="please reload...">
+    <p> <%= pdf[pdf.length-4].filename %><br><%= pdf[pdf.length-4].subject %></p>
     <button type="submit" value='a'>OPEN </button> </form></td>
 </tr>
 <tr>
   <td><form action="pdf/<%= pdf[pdf.length-3].filename %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+    <img class="image-fluid float-left" class="image-fluid rounded"  style = "height: 15%;width: 12% " src="tb.png" alt="please reload...">
     
-    <p> <%= pdf[pdf.length-3].filename %></p>
+    <p> <%= pdf[pdf.length-3].filename %><br><%= pdf[pdf.length-3].subject %></p>
     <button type="submit" value='a'>OPEN </button> </form></td>
   <td><form action="pdf/<%= pdf[pdf.length-2].filename %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-    <p> <%= pdf[pdf.length-2].filename %></p>
+    <img class="image-fluid float-left" class="image-fluid rounded"  style = "height: 15%;width: 12% "src="tb.png" alt="please reload...">
+    <p> <%= pdf[pdf.length-2].filename %><br><%= pdf[pdf.length-2].subject %></p>
     <button type="submit" value='a'>OPEN </button> </form></td>
   <td><form action="pdf/<%= pdf[pdf.length-1].filename %>" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
-    <p> <%= pdf[pdf.length-1].filename %></p>
+    <img class="image-fluid float-left" class="image-fluid rounded"  style = "height: 15%;width: 12% " src="tb.png" alt="please reload...">
+    <p> <%= pdf[pdf.length-1].filename %><br><%= pdf[pdf.length-1].subject %></p>
     <button type="submit" value='a'>OPEN </button> </form></td>
 </tr>
 
