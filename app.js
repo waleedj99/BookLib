@@ -6,15 +6,12 @@ var assert = require('assert');
 var fs = require('fs');
 var formidable = require('formidable');
 const pdf = require('pdf-thumbnail');
-
 const mongoose = require('mongoose');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const multer = require('multer')
 const crypto = require('crypto');
 const path = require('path');
-
-
 var app = express();
 app.use(methodOverride('_method'));
 const url = 'mongodb://localhost:27017'
@@ -77,7 +74,7 @@ app.get('/notes',(req,res)=>{
                     file.isNote = false;
                 }
             });
-            let thirdSem = ['Computer Organisation', 'Java', 'Data Strutures', 'Discrete Mathematics','Logic Design']
+            let thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Strutures', 'Discrete Mathematics','Logic Design']
             let fourthSem = ['Algorithm Design', 'Microprocessor', "Operating Systems",'Linux system programing']
             let fifthSem = ['Database Management Systems','Computer Networks']
             let sixthSem = ['Computer Graphics','Compilers','Internet and Web Technologies']
@@ -124,7 +121,7 @@ app.get('/textbook',(req,res)=>{
                     file.isTB = false;
                 }
             });
-            let thirdSem = ['Computer Organisation', 'Java', 'Data Strutures', 'Discrete Mathematics', 'Logic Design']
+            let thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Strutures', 'Discrete Mathematics', 'Logic Design']
             let fourthSem = ['Algorithm Design', 'Microprocessor', "Operating Systems", 'Linux system programing']
             let fifthSem = ['Database Management Systems', 'Computer Networks']
             let sixthSem = ['Computer Graphics', 'Compilers', 'Internet and Web Technologies']
@@ -267,7 +264,7 @@ app.post('/login', function (req, res) {
         collection.findOne({ username: req.body.username }, (err, item) => {
             console.log("Founf" + item)
             if (item.password == req.body.password)
-                res.send("login Successful")
+                res.redirect('/upload')
             else
                 res.send("Login Failed")
         })
@@ -320,7 +317,7 @@ var arr =[]
             collection.createIndex({ "username": 1 }, { unique: true });
             console.log("Adding")
             collection.insertOne({ username: req.body.username, password: req.body.password }, (err, item) => {
-                res.render('pages/login.ejs')
+                res.redirect('/login')
             })
             client.close()
         })
