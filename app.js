@@ -20,6 +20,7 @@ app.use(methodOverride('_method'));
 const url = 'mongodb://localhost:27017'
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static("public"));
 
 const conn = mongoose.createConnection(url);
 
@@ -76,25 +77,28 @@ app.get('/notes',(req,res)=>{
                     file.isNote = false;
                 }
             });
-            let subject = ['3subject1', 'subject2', 'subject3']
+            let thirdSem = ['Computer Organisation', 'Java', 'Data Strutures', 'Discrete Mathematics','Logic Design']
+            let fourthSem = ['Algorithm Design', 'Microprocessor', "Operating Systems",'Linux system programing']
+            let fifthSem = ['Database Management Systems','Computer Networks']
+            let sixthSem = ['Computer Graphics','Compilers','Internet and Web Technologies']
             switch (req.query.sem) {
                 case '3':
-                    res.render('pages/notes', { files: files, subject: ['uP', 'CO', 'subject3'] })
+                    res.render('pages/notes', { files: files, sem:'3', subject: thirdSem } )
                     break;
                 case '4':
-                    res.render('pages/notes', { files: files, subject: ['Algorithm Design', 'uP', 'subject3'] })
+                    res.render('pages/notes', { files: files, sem: '4', subject: fourthSem })
                     break;
                 case '5':
-                    res.render('pages/notes', { files: files, subject: ['CO', 'subject2', 'subject3'] })
+                    res.render('pages/notes', { files: files, sem: '5', subject: fifthSem })
                     break;
                 case '6':
-                    res.render('pages/notes', { files: files, subject: ['6subject1', 'subject2', 'subject3'] })
+                    res.render('pages/notes', { files: files, sem: '6',subject: sixthSem })
                     break;
                 case '7':
-                    res.render('pages/notes', { files: files, subject: ['7subject1', 'subject2', 'subject3'] })
+                    res.render('pages/notes', { files: files, sem: '7', subject: ['subject1', 'subject2', 'subject3'] })
                     break;
                 case '8':
-                    res.render('pages/notes', { files: files, subject: subject })
+                    res.render('pages/notes', { files: files, sem: '8', subject: ['subject1', 'subject2', 'subject3'] })
                     break;
                 default:
                     res.render('pages/notes', { files: files })
@@ -120,30 +124,32 @@ app.get('/textbook',(req,res)=>{
                     file.isTB = false;
                 }
             });
-            let subject = ['3subject1', 'subject2', 'subject3']
+            let thirdSem = ['Computer Organisation', 'Java', 'Data Strutures', 'Discrete Mathematics', 'Logic Design']
+            let fourthSem = ['Algorithm Design', 'Microprocessor', "Operating Systems", 'Linux system programing']
+            let fifthSem = ['Database Management Systems', 'Computer Networks']
+            let sixthSem = ['Computer Graphics', 'Compilers', 'Internet and Web Technologies']
             switch (req.query.sem) {
                 case '3':
-                    res.render('pages/textbook', { files: files , subject:['uP','CO','subject3']})
+                    res.render('pages/textbook', { files: files, sem: '3', subject: thirdSem })
                     break;
                 case '4':
-                    res.render('pages/textbook', { files: files, subject: ['4subject1', 'subject2', 'subject3'] })
+                    res.render('pages/textbook', { files: files, sem: '4', subject: fourthSem })
                     break;
                 case '5':
-                    res.render('pages/textbook', { files: files, subject: ['CO', 'subject2', 'subject3'] })
+                    res.render('pages/textbook', { files: files, sem: '5', subject: fifthSem })
                     break;
                 case '6':
-                    res.render('pages/textbook', { files: files, subject: ['6subject1', 'subject2', 'subject3'] })
+                    res.render('pages/textbook', { files: files, sem: '6', subject: sixthSem })
                     break;
                 case '7':
-                    res.render('pages/textbook', { files: files, subject: ['7subject1', 'subject2', 'subject3'] })
+                    res.render('pages/textbook', { files: files, sem: '7', subject: ['subject1', 'subject2', 'subject3'] })
                     break;
                 case '8':
-                    res.render('pages/textbook', { files: files, subject: subject})
+                    res.render('pages/textbook', { files: files, sem: '8', subject: ['subject1', 'subject2', 'subject3'] })
                     break;
                 default:
                     res.render('pages/textbook', { files: files })
             }
-            
         }
     });
 })

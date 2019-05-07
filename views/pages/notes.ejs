@@ -13,6 +13,23 @@ button{
   background-color:#FFFBE6;
   border:none;
 }
+.colorButton{
+  background-color: #008CBA; 
+  border: none;
+  color: white;
+  height :100%;
+  /*padding: 15px 32px;*/
+   border: solid #008CBA;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.colorButton:hover{
+  background-color: rgb(242, 255, 243); /* Green */
+  color:black;
+  border: solid #008CBA;
+}
 
 </style>
 
@@ -46,18 +63,18 @@ button{
   <% for(var i = 0; i <= subject.length - 1; i++) {%>  
     console.log('l')
     var tr = document.createElement('tr')
-    tr.innerHTML = "<td><%=subject[i]%></td>"
+    tr.style = "border-bottom : solid;"
+    tr.innerHTML = `<td style = "padding :20"  ><%=subject[i]%></td>`
     tr.id = '<%=subject[i]%>'
     var tab = document.getElementsByTagName("table")[0]
     tab.appendChild(tr)
   <%}%>
-    
   <% for(var i = 0; i <= nt.length - 1; i++) { %>
     var cln = document.createElement('td')
     cln.innerHTML = `<form action="http://localhost:3000/pdf/<%= nt[i].filename %>" class="book" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+    <img class="image-fluid float-left" class="image-fluid rounded"  style = "height:12%;width:10% " src="/notes.png" alt="please reload...">
     <p> <%= nt[i].filename %><br><%= nt[i].subject %></p>
-    <button type="submit" value='a'>OPEN </button> </form>`
+    <button type="submit" value='a' class = "colorButton" >OPEN </button> </form>`
     //cln.getElementsByTagName("p")[0].innerHTML = "<%= nt[i].filename %>";
     //console.log(cln.getElementsByTagName("p"))
     //console.log('<%=nt%>')

@@ -2,28 +2,27 @@
     <style>
         .activetab{
             color: #356859;
-    font-weight: bold;
-    text-decoration: underline;
+        font-weight: bold;
+        text-decoration: underline;
+        }
+        .alltab{
+            margin: auto 50em;
         }
     </style>
 </head>
 <ul id = "semnav" class="list-inline" style="padding: 10px; text-align:center;background-color:#FFFBE6;">
-    <li class="list-inline-item " style="margin: auto 62px;"><a href="?sem=3"><button class="activetab">3rd Semester</button></a></li>
-    <li class="list-inline-item" style="margin: auto 62px;"><a href = "?sem=4"><button >4th Semester</button></a></li>
-    <li class="list-inline-item" style="margin: auto 62px;"><a href="?sem=5"><button>5th Semester</button></a></li>
-    <li class="list-inline-item" style="margin: auto 62px;"><a href="?sem=6"><button>6th Semester</button></a></li>
-    <li class="list-inline-item" style="margin: auto 62px;"><a href="?sem=7"><button>7th Semester</button></a></li>
-    <li class="list-inline-item" style="margin: auto 62px;"><a href="?sem=8"><button>8th Semester</button></a></li>
+    <li class="list-inline-item activetab" id = "3" ><a href="?sem=3"><button >3rd Semester</button></a></li>
+    <li class="list-inline-item" id = "4"><a href = "?sem=4"><button >4th Semester</button></a></li>
+    <li class="list-inline-item" id = "5"><a href="?sem=5"><button>5th Semester</button></a></li>
+    <li class="list-inline-item" id = "6"><a href="?sem=6"><button>6th Semester</button></a></li>
+    <li class="list-inline-item" id = "7"><a href="?sem=7"><button>7th Semester</button></a></li>
+    <li class="list-inline-item"id = "8"><a href="?sem=8"><button>8th Semester</button></a></li>
 </ul>
 <script>
     var sem = document.getElementById("semnav")
-    var btns = sem.getElementsByTagName('button');
-    console.log(btns)
-    for(var i=0;i<=5;i++){
-        btns[i].addEventListener("click",function(){
-            var current = sem.getElementsByClassName("activetab");
-            current[0].className = current[0].className.replace("activetab", "");
-            this.className += " activetab";
-        })
-    }
+    mbtn = document.getElementById("<%=sem%>")
+    mbtn.className += " activetab"
+    var current = sem.getElementsByClassName("activetab");
+    console.log(current)
+    current.className = current[0].className.replace("activetab", "");  
 </script>

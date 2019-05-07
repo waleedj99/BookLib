@@ -45,7 +45,8 @@ button{
   
   <% for (var i = 0; i <= subject.length-1;i++){%>
     var tr = document.createElement('tr')    
-    tr.innerHTML = "<td><%=subject[i]%></td>"
+    tr.style = "border-bottom : solid;"
+    tr.innerHTML = `<td style = "padding :20"  ><%=subject[i]%></td>`
     tr.id = '<%=subject[i]%>'
     var tab = document.getElementsByTagName("table")[0]
     tab.appendChild(tr)
@@ -55,7 +56,7 @@ button{
   <% for(var i =0;i<= tb.length-1 ;i++){ %>
   var cln = document.createElement('td')
   cln.innerHTML = `<form action="http://localhost:3000/pdf/<%= tb[i].filename %>" class="book" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" src="icon.png" alt="please reload...">
+    <img class="image-fluid float-left" class="image-fluid rounded" style = "height:12%;width:10% " src="/tb.png" alt=".">
     <p> <%= tb[i].filename %><br><%= tb[i].subject %></p>
     <button type="submit" value='a'>OPEN </button> </form>`
   //cln.getElementsByTagName("p")[0].innerHTML = "<%= tb[i].filename %>";
