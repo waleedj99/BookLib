@@ -105,6 +105,7 @@
   </div>
 
 <table  align="center" cellpadding="40" style="margin-top: 5%;">
+<% if(files){ %>
   <% if(files){ %>
   <%  var pdf = [] %>
   <% files.forEach(function(file) { %>
@@ -113,7 +114,9 @@
     <img src="image/<%= file.filename %>" alt="">
     <% } else { %>
     <% }})} %>
-<tr>
+
+  <% if(pdf.count>=6){ %>
+    <tr>
   <td>
   <form action="pdf/<%= pdf[1].filename %>" method="GET">
   <img class="image-fluid float-left" class="image-fluid rounded"  style = "height: 15%;width: 12% " src="tb.png" alt="please reload...">
@@ -147,6 +150,9 @@
     <button type="submit" value='a'>OPEN </button> </form></td>
 </tr>
 
+<% }else{%>
+  <tr><td><b>NO BOOKS UPLOADED. <BR>LOGIN TO DOWNLOAD</BR></b></td></tr>
+<%}}%>
 </table>
 <script src="index.js"></script>
 </body>

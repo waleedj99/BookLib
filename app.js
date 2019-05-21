@@ -219,9 +219,6 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
             subject: req.body.subject,
             category:req.body.category} })
 
-        collection.findOne({ filename: "al-masri2018 (1).pdf" }, (err, item) => {
-            console.log(item.body)
-        })
         client.close();
         res.redirect('/')
         
