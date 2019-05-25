@@ -1,4 +1,6 @@
 # BookLib
+Make sure NPM is installed 
+install from https://www.npmjs.com/get-npm
 Online Book library  , using which students can get Textbooks for their respective subjects
 WebDev CLub Mini Project
 To Use 
