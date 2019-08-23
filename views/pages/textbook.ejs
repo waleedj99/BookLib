@@ -9,18 +9,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <style>
+  .box-style{
+        height: 12em;
+    width: 15%;
+    padding: 1em;
+    
+    background-color: white;
+    margin: 1em;
+    box-shadow: 3px 3px 3px 3px grey;
+    position: relative;
+    /* border: solid; */
+  }
+  
 button{
   background-color:#FFFBE6;
   border:none;
 }
 .colorButton{
+      width: 100%;
+    left: 0;
   background-color: #008CBA; 
   border: none;
   color: white;
-  height :100%;
+  
   /*padding: 15px 32px;*/
    border: solid #008CBA;
   text-align: center;
+  position: absolute;
+    height: auto;
+    bottom: 0;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
@@ -80,8 +97,8 @@ button{
 <br><br>
 <%- include('../partials/semnav') %>
 
-<div class="container">
-<table  align="center" cellpadding="40" style="margin-top: 5%;">
+<div class="container" id="table">
+<div cellpadding="10" style="margin-top: 5%;">
   <% if(files){ %>
   <%  var tb = [] %>
   <% files.forEach(function(file) { %>
@@ -98,21 +115,30 @@ button{
 <script >
   
   <% for (var i = 0; i <= subject.length-1;i++){%>
-    var tr = document.createElement('tr')    
+    var tr = document.createElement('div')    
     tr.style = "border-bottom : solid;"
-    tr.innerHTML = `<td style = "padding :20"  ><%=subject[i]%></td>`
+    tr.className = "row"
+    tr.innerHTML = `<div style = "width:12%"  ><%=subject[i]%></td>`
     tr.id = '<%=subject[i]%>'
-    var tab = document.getElementsByTagName("table")[0]
+    var tab = document.getElementById("table")
     tab.appendChild(tr)
   <%}%>
 
 
   <% for(var i =0;i<= tb.length-1 ;i++){ %>
-  var cln = document.createElement('td')
+  var cln = document.createElement('div')
+  cln.className = "col-xs-2 box-style"
+  //cln.style = "height:11em;width:15%;padding-right:1em;padding-top:1em;background-color:white;margin:1em;position:relative"
   cln.innerHTML = `<form action="http://localhost:3000/pdf/<%= tb[i].filename %>" class="book" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded" style = "height:12%;width:10% " src="/tb.png" alt=".">
-    <p> <%= tb[i].filename %><br><%= tb[i].subject %></p>
-    <button type="submit" value='a' class = "colorButton">OPEN </button> </form>`
+    <p class = "crop">
+    <%= tb[i].filename %></p>
+    <p >
+      <small class="text-muted">
+        <%= tb[i].subject %>
+      </small>
+    </p>
+    <button type="submit" value='a' class = "colorButton card-button">OPEN </button>
+    </form>`
   //cln.getElementsByTagName("p")[0].innerHTML = "<%= tb[i].filename %>";
   console.log(cln.getElementsByTagName("p"))
   //console.log('<%=tb%>')

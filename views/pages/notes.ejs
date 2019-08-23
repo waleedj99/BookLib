@@ -13,18 +13,39 @@ button{
   background-color:#FFFBE6;
   border:none;
 }
+ .box-style{
+        height: 12em;
+    width: 15%;
+    padding: 1em;
+    
+    background-color: white;
+    margin: 1em;
+    box-shadow: 3px 3px 3px 3px grey;
+    position: relative;
+    /* border: solid; */
+  }
 .colorButton{
+   width: 100%;
+    left: 0;
   background-color: #008CBA; 
   border: none;
   color: white;
-  height :100%;
   /*padding: 15px 32px;*/
    border: solid #008CBA;
   text-align: center;
+  position: absolute;
+    height: auto;
+    bottom: 0;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
 }
+.crop {
+    width:100%;
+    overflow:hidden;
+    height:50%;
+    line-height:25px;
+    }
 .colorButton:hover{
   background-color: rgb(242, 255, 243); /* Green */
   color:black;
@@ -78,8 +99,8 @@ button{
 <%- include('../partials/semnav') %>
 
 
-<div class="container">
-<table  align="center" cellpadding="40" style="margin-top: 5%;">
+<div class="container" id="table">
+<div  align="center" cellpadding="40" style="margin-top: 5%;">
   <% if(files){ %>
   <%  var nt = [] %>
   <% files.forEach(function(file) { %>
@@ -89,25 +110,32 @@ button{
   <% }})} %>
 
 
-</table>
+  </div>
 
 </div>
 <script>
 
   <% for(var i = 0; i <= subject.length - 1; i++) {%>  
     console.log('l')
-    var tr = document.createElement('tr')
+    var tr = document.createElement('div')
     tr.style = "border-bottom : solid;"
-    tr.innerHTML = `<td style = "padding :20"  ><%=subject[i]%></td>`
+    tr.className = "row"
+     tr.innerHTML = `<div style = "width:12%"  ><%=subject[i]%></td>`
     tr.id = '<%=subject[i]%>'
-    var tab = document.getElementsByTagName("table")[0]
+    var tab = document.getElementById("table")
     tab.appendChild(tr)
   <%}%>
   <% for(var i = 0; i <= nt.length - 1; i++) { %>
-    var cln = document.createElement('td')
+    var cln = document.createElement('div')
+    cln.className = "col-xs-2 box-style"
     cln.innerHTML = `<form action="http://localhost:3000/pdf/<%= nt[i].filename %>" class="book" method="GET">
-    <img class="image-fluid float-left" class="image-fluid rounded"  style = "height:12%;width:10% " src="/notes.png" alt="please reload...">
-    <p> <%= nt[i].filename %><br><%= nt[i].subject %></p>
+    
+    <p class="crop">
+    <%= nt[i].filename %></p>
+    <p>
+    <small class="muted">
+    <%= nt[i].subject %>
+    </small></p>
     <button type="submit" value='a' class = "colorButton" >OPEN </button> </form>`
     //cln.getElementsByTagName("p")[0].innerHTML = "<%= nt[i].filename %>";
     //console.log(cln.getElementsByTagName("p"))

@@ -75,7 +75,7 @@ app.get('/notes',(req,res)=>{
                 }
             });
             let thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Strutures', 'Discrete Mathematics','Logic Design']
-            let fourthSem = ['Algorithm Design', 'Microprocessor', "Operating Systems",'Linux system programing']
+            let fourthSem = ['Algorithm Design', 'Microprocessors', "Operating Systems",'Linux system programming']
             let fifthSem = ['Database Management Systems','Computer Networks']
             let sixthSem = ['Computer Graphics','Compilers','Internet and Web Technologies']
             switch (req.query.sem) {
@@ -105,7 +105,6 @@ app.get('/notes',(req,res)=>{
 
 })
 
-
 app.get('/textbook',(req,res)=>{
     
     gfs.files.find().toArray((err, files) => {
@@ -122,7 +121,7 @@ app.get('/textbook',(req,res)=>{
                 }
             });
             let thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Strutures', 'Discrete Mathematics', 'Logic Design']
-            let fourthSem = ['Algorithm Design', 'Microprocessor', "Operating Systems", 'Linux system programing']
+            let fourthSem = ['Algorithm Design', 'Microprocessors', "Operating System", 'Linux system programming']
             let fifthSem = ['Database Management Systems', 'Computer Networks']
             let sixthSem = ['Computer Graphics', 'Compilers', 'Internet and Web Technologies']
             switch (req.query.sem) {
