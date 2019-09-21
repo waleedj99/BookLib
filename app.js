@@ -4,23 +4,65 @@ const methodOverride = require('method-override');
 const mongo = require('mongodb').MongoClient
 var assert = require('assert');
 var fs = require('fs');
-var formidable = require('formidable');
+var session = require('express-session')
+//var formidable = require('formidable');
 const pdf = require('pdf-thumbnail');
 const mongoose = require('mongoose');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const multer = require('multer')
 const crypto = require('crypto');
-const path = require('path');
+//const path = require('path');
 var app = express();
 app.use(methodOverride('_method'));
-const url = 'mongodb://localhost:27017'
+const url = //"mongodb+srv://waleed:Throwaway69@cluster0-iewfh.mongodb.net/test?retryWrites=true&w=majority"//
+'mongodb://localhost:27017'
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static("public"));
 
+const SESS_LIFETIME = 1000*60*60*2 
+const SESS_NAME = 'ses1'
+const IN_PROD = 'production'
+const SESS_SECRET = "something"
 const conn = mongoose.createConnection(url);
+var isLogin = false
 
+
+app.use(
+    session({
+        name:SESS_NAME,
+        resave:false,
+        saveUninitialized:false,
+        secret:SESS_SECRET,
+        cookie:{
+            maxAge:SESS_LIFETIME,
+            sameSite:true,
+            secure:IN_PROD
+        }
+        
+    })
+)
+
+
+const redirectHome = (req,res,next)=>{
+    console.log(isLogin)
+    if(!isLogin){
+        next()
+    }else{
+       res.redirect('/') 
+    }
+}
+
+
+const redirectLogin = (req, res, next) => {
+    console.log(isLogin)
+    if (isLogin) {
+        next()
+    } else {
+        res.redirect('/login')
+    }
+}
 // Init gfs
 let gfs;
 
@@ -29,8 +71,6 @@ conn.once('open', () => {
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection('uploads');
 });
-
-
 
 const storage = new GridFsStorage({
     url: url,
@@ -53,19 +93,19 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-app.get('/register', function (req, res) {
+app.get('/register', redirectHome, function (req, res) {
     var tagline = ''
     res.render('pages/register.ejs', {
         tagline: tagline
     }); 
 })
-app.get('/notes',(req,res)=>{
+app.get('/notes', redirectLogin,(req,res)=>{
     gfs.files.find().toArray((err, files) => {
 
         // Check if files
         if (!files || files.length === 0) {
 
-            res.render('pages/notes', { files: false })
+            res.render('pages/notes', { files: false ,isLogin:isLogin})
         } else {
             files.map(file => {
                 if (file.contentType === 'application/pdf' && file.category === "notes" && file.semester === req.query.sem) {
@@ -104,14 +144,13 @@ app.get('/notes',(req,res)=>{
     });
 
 })
-
-app.get('/textbook',(req,res)=>{
+app.get('/textbook', redirectLogin,(req,res)=>{
     
     gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
-
-            res.render('pages/textbook', { files: false})
+            
+            res.render('pages/textbook', { files: false , isLogin:isLogin})
         } else {
             files.map(file => {
                 if (file.contentType === 'application/pdf' && file.category === "textbook" && file.semester === req.query.sem) {
@@ -149,7 +188,8 @@ app.get('/textbook',(req,res)=>{
         }
     });
 })
-app.get('/', (req, res) => {
+
+app.get('/', redirectLogin ,(req, res) => {
     
     gfs.files.find().toArray((err, files) => {
         
@@ -170,11 +210,15 @@ app.get('/', (req, res) => {
         }
     });
 });
-app.get('/login', function (req, res) {
+
+app.get('/login',redirectHome, function (req, res) {
     res.render('pages/login.ejs');
 })
-
-app.get('/pdf/:filename', (req, res) => {
+app.get('/logout', redirectLogin,(req,res)=>{
+    isLogin = false
+    res.redirect('/')
+})
+app.get('/pdf/:filename', redirectLogin, (req, res) => {
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
         // Check if file
         console.log(file)
@@ -198,9 +242,10 @@ app.get('/pdf/:filename', (req, res) => {
     });
 });
 
-app.get('/upload', function (req, res){
-    res.render('pages/upload')
+app.get('/upload', redirectLogin, function (req, res){
+    res.render('pages/upload',{isLogin:isLogin})
 })
+
 app.post('/upload', upload.single('myFile'), (req, res) => {
     mongo.connect(url, (err, client) => {
         if (err) {
@@ -209,16 +254,26 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
         }
         console.log("Connexted bois")
         var db = client.db('admin')
+        
         //console.log(db)
         var collection = db.collection("uploads.files")
         //console.log(collection)
         console.log("req is " + req.body.semester)
-        collection.updateOne({ filename: req.file.filename }, { $set: { 
-            semester: req.body.semester,
-            subject: req.body.subject,
-            category:req.body.category} })
+        collection.updateOne(
+            { filename: req.file.filename },
+            {
+                $set:
+                {
+                    semester: req.body.semester,
+                    subject: req.body.subject,
+                    category: req.body.category
+                }
+            }
+        )
+        
 
         client.close();
+        
         res.redirect('/')
         
     })    
@@ -249,6 +304,7 @@ app.get('/download', function (req, res) {
 
 app.post('/login', function (req, res) {
 
+
     mongo.connect(url, (err, client) => {
         if (err) {
             console.error(err)
@@ -259,14 +315,21 @@ app.post('/login', function (req, res) {
         var collection = db.collection(req.body.username)
         collection.findOne({ username: req.body.username }, (err, item) => {
             console.log("Founf" + item)
-            if (item.password == req.body.password)
-                res.redirect('/upload')
-            else
+            if (item.password == req.body.password){
+                isLogin = true
+                res.redirect('/')
+            }
+            else{
+                isLogin = false
                 res.send("Login Failed")
+            }
+                
         })
         client.close();
-    })
+        })
+    
 })
+
 
 app.post('/register', function (req, res) {
 
