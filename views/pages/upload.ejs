@@ -1,63 +1,205 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Textbooks</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upload</title>
     
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-    </head>
-<body style=" background-color: bisque;">
-<%- include('../partials/navigation') %>
-    <form action="/upload" method="POST" enctype="multipart/form-data" style="text-align: center;
-        font-size: 20px;
-        font-family: Helvetica;
-        padding: 5% 1%;
-        margin: inherit;
-        margin-top: 15%;
-        margin-left: 25%;
-        margin-right: 25%;
-        color: rgb(75, 119, 0);
-        border: solid darkolivegreen;">
-            Sem:<br> 
-            <select name = "semester">
-                <option  value="3">III</option>
-                <option  value="4">IV</option>
-                <option  value="5">V</option>
-                <option  value="6">VI</option>
-            </select>
-            <br>
-            Subject:<br>
-            
-            <input list="subjects" name="subject" placeholder="Enter Subject" autocomplete="off">
-            <datalist id="subjects">
-                <option value="Mathematics 4"></option>
-                <option value="Microprocessors"></option>
-                <option value="Operating System"></option>
-                <option value="Linux system programming"></option>
-                <option value="Algorithm Design"></option>
-                <option value="Internet and Web Technologies"></option>
-                <option value="Database Management Systems"></option>
-                <option value="OOPs with Java"></option>
-                <option value="Computer Organisation"></option>
-                <option value="Logic Design"></option>
-            </datalist>
-            <br>
-            <input type="radio" name="category" value="textbook"> Textbook</input><br>
-            <input type="radio" name="category" value="notes"> Notes</input><br>
-            <input type="file" name="myFile" id = "myFile"></input><br>
-            <input type = "submit" value=" Upload "></input>
-        </form>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</head>
+
+<style>
+body{
+    height: 100vh;
+}
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(224,224,224);
+    color: black;
+    text-align: center;
+}
+.loginnn{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin: 7.5% 25%;
+}
+.loginnn img{
+    height: 7em;
+    padding: 5%;
+}
+.user-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">BookStore</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/upload">Upload</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/notes" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Notes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/notes/?sem=3">3rd Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=4">4th Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=5">5th Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=6">6th Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=7">7th Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=8">8th Sem</a>
+                    </div>
+                </li>
+                <li class="nav-item active dropdown">
+                    <a class="nav-link dropdown-toggle" href="/textbook" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Textbook
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/textbook/?sem=3">3rd Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=4">4th Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=5">5th Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=6">6th Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=7">7th Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=8">8th Sem</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">        
+                <li class="nav-item ">
+                    <a class="nav-link" href="http://localhost:3000/profile">Profile</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                </li>
+                
+              </ul>
+            </div>
+        </nav>
+    <div class="loginnn">
+        <div class="container">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                
+                <div class="form-group">
+                    <label for="semester">Select Semester</label>
+                    <select name="semester"class="form-control" id="semester" onchange ="checkSem(this)">
+                        
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Select Subject</label>
+                    <select name="subject" class="form-control" id="subject" >
+                        <option value="Computer Organisation">Computer Organisation</option>
+                        <option value="OOPs with Java">OOPs with Java</option>
+                        <option value="Data Structures">Data Structures</option>
+                        <option value="Discrete Mathematics">Discrete Mathematics</option>
+                        <option value="Logic Design">Logic Design</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="category" value="textbook" checked>
+                        <label class="form-check-label">
+                            Textbook
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="category" value="notes">
+                        <label class="form-check-label" >
+                            Notes
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="myFile">Select PDF </label>
+                    
+                    <input type="file" name="myFile" id="myFile" class="form-control-file"></input>
+                </div>
+
+                <button type="submit" value="Upload" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+    </div>
+<script>
+    function addSubjects(subjectArr){
         
-    </body>
+        optionParent = document.getElementById("subject")
+        optionParent.innerHTML = ''
+        subjectArr.forEach(subject => {
+            newOption = document.createElement('option')
+            newOption.value = subject
+            newOption.innerHTML = subject
+            optionParent.appendChild(newOption)
+        });
+    }
+    function checkSem(sel){
+        const thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Structures', 'Discrete Mathematics', 'Logic Design']
+        const fourthSem = ['Algorithm Design', 'Microprocessors', "Operating System", 'Linux system programming']
+        const fifthSem = ['Database Management Systems', 'Computer Networks']
+        const sixthSem = ['Computer Graphics', 'Compilers', 'Internet and Web Technologies']
+        const seventhSem = ['subject1', 'subject2', 'subject3']
+        const eighthSem = ['subject4', 'subject5', 'subject6']
+
+        switch (sel.options[sel.selectedIndex].text) {
+        case '3': addSubjects(thirdSem)
+           break;
+        case '4': addSubjects(fourthSem)
+            break;
+        case '5': addSubjects(fifthSem)
+            break;
+        case '6': addSubjects(sixthSem)
+            break;
+        case '7': addSubjects(seventhSem)
+            break;
+        case '8': addSubjects(eighthSem)
+            break;
+        default:
+            break;
+    }
+}
+</script>
+<footer>
+    <p>©Untitled Inc</p>
+</footer>
+</body>
+
 </html>

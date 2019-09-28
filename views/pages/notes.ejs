@@ -9,47 +9,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <style>
-button{
-  background-color:#FFFBE6;
-  border:none;
+body{
+    height: 100vh;
 }
- .box-style{
-        height: 12em;
-    width: 15%;
-    padding: 1em;
-    
-    background-color: white;
-    margin: 1em;
-    box-shadow: 3px 3px 3px 3px grey;
-    position: relative;
-    /* border: solid; */
-  }
-.colorButton{
-   width: 100%;
+.griddd{
+    padding-top: 5%;
+    padding-bottom: 0%;
+}
+.container{
+    height: 85vh;
+}
+.col-4{
+  margin-top: 3%
+}
+footer{
+    position: fixed;
     left: 0;
-  background-color: #008CBA; 
-  border: none;
-  color: white;
-  /*padding: 15px 32px;*/
-   border: solid #008CBA;
-  text-align: center;
-  position: absolute;
-    height: auto;
     bottom: 0;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-}
-.crop {
-    width:100%;
-    overflow:hidden;
-    height:50%;
-    line-height:25px;
-    }
-.colorButton:hover{
-  background-color: rgb(242, 255, 243); /* Green */
-  color:black;
-  border: solid #008CBA;
+    width: 100%;
+    background-color: rgb(224,224,224);
+    color: black;
+    text-align: center;
 }
 
 </style>
@@ -57,60 +37,94 @@ button{
 
 </head>
 
-<body style="background-color:#FFFBE6;">
 
-<nav class="navbar fixed-top navbar-expand-lg  navbar-dark "
-  style="background-image: linear-gradient( 109.6deg,  rgba(61,106,239,1) 11.2%, rgba(122,14,190,1) 70.2% );">
-  <a class="navbar-brand" href="/">BoLi</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="http://localhost:3000/">Home <span class="sr-only">(current)</span></a>
-      </li>
-                 
-      <li class="nav-item">
-        <a class="nav-link" href="http://localhost:3000/textbook/?sem=3">TextBook</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="http://localhost:3000/notes/?sem=3">Notes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="http://localhost:3000/about">About</a>
-      </li>
 
-    </ul>
-    <ul class="navbar-nav ml-auto">
+<body>
+  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">BookStore</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item ">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/upload">Upload</a>
+        </li>
+        <li class="nav-item active dropdown">
+          <a class="nav-link dropdown-toggle" href="/notes" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Notes
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/notes/?sem=3">3rd Sem</a>
+            <a class="dropdown-item" href="/notes/?sem=4">4th Sem</a>
+            <a class="dropdown-item" href="/notes/?sem=5">5th Sem</a>
+            <a class="dropdown-item" href="/notes/?sem=6">6th Sem</a>
+            <a class="dropdown-item" href="/notes/?sem=7">7th Sem</a>
+            <a class="dropdown-item" href="/notes/?sem=8">8th Sem</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/textbook" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Textbook
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/textbook/?sem=3">3rd Sem</a>
+            <a class="dropdown-item" href="/textbook/?sem=4">4th Sem</a>
+            <a class="dropdown-item" href="/textbook/?sem=5">5th Sem</a>
+            <a class="dropdown-item" href="/textbook/?sem=6">6th Sem</a>
+            <a class="dropdown-item" href="/textbook/?sem=7">7th Sem</a>
+            <a class="dropdown-item" href="/textbook/?sem=8">8th Sem</a>
+          </div>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
       
-      <% if(locals.isLogin){%>
-      <li class="nav-item ">
-        <a class="nav-link" href="http://localhost:3000/login">Login</a>
-      </li>
-      <li class="nav-item ">
-        <a class="nav-link" href="http://localhost:3000/register">Register</a>
-      </li>
-      <% }else{%>
-          <li class="nav-item ">
-            <a class="nav-link" href="http://localhost:3000/profile">Profile</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="/logout">Log Out</a>
-          </li>
+        <% if(locals.isLogin){%>
+        <li class="nav-item ">
+          <a class="nav-link" href="http://localhost:3000/login">Login</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="http://localhost:3000/register">Register</a>
+        </li>
+        <% }else{%>
+        <li class="nav-item ">
+          <a class="nav-link" href="http://localhost:3000/profile">Profile</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="/logout">Log Out</a>
+        </li>
         <%}%>
-    </ul>
+          </ul>
 
-  </div>
-</nav>
-<br>
-<br><br>
-<%- include('../partials/semnav') %>
+      
 
-
-<div class="container" id="table">
-<div  align="center" cellpadding="40" style="margin-top: 5%;">
+    </div>
+  </nav>
+  
+<div class="container">
+<div class="griddd">
+  <div class="container"  id="table">
+    <div class="row">
+      <div class="col-sm-9">
+        <h3>Subject</h3>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="subject-dropdown">Select Subject</label>
+          <select class="form-control" id="subject-dropdown" onChange = "change_sub(this);">
+    
+          </select>
+        </div>
+      </div>
+    
+    </div>
   <% if(files){ %>
   <%  var nt = [] %>
   <% files.forEach(function(file) { %>
@@ -119,34 +133,57 @@ button{
   <% } else { %>
   <% }})} %>
 
-
   </div>
+</div>
 
 </div>
+<footer>
+  <p>©Untitled Inc</p>
+</footer>
 <script>
-
-  <% for(var i = 0; i <= subject.length - 1; i++) {%>  
-    console.log('l')
+ 
+  
+  <% for(var i = 0; i < subject.length ; i++) {%>  
+     var dropdown_selector = document.getElementById('subject-dropdown');
+    dropdown_selector.innerHTML += `<option><%=subject[i]%></option>`
     var tr = document.createElement('div')
-    tr.style = "border-bottom : solid;"
-    tr.className = "row"
-     tr.innerHTML = `<div style = "width:12%"  ><%=subject[i]%></td>`
-    tr.id = '<%=subject[i]%>'
+    tr.className = "container subject-list"
+    tr.id = "<%=subject[i]%>" 
+     //tr.innerHTML = `<div class = "col-sm-3" id="<%=subject[i]%>">  </div>`
+    
     var tab = document.getElementById("table")
     tab.appendChild(tr)
-  <%}%>
-  <% for(var i = 0; i <= nt.length - 1; i++) { %>
-    var cln = document.createElement('div')
-    cln.className = "col-xs-2 box-style"
-    cln.innerHTML = `<form action="http://localhost:3000/pdf/<%= nt[i].filename %>" class="book" method="GET">
     
-    <p class="crop">
-    <%= nt[i].filename %></p>
-    <p>
-    <small class="muted">
-    <%= nt[i].subject %>
-    </small></p>
-    <button type="submit" value='a' class = "colorButton" >OPEN </button> </form>`
+    
+  
+    for (var j = 0; j < Math.ceil(<%=nt.length%> / 3); j++) {
+      var rowDiv = document.createElement('div')
+      rowDiv.className = "row"
+      rowDiv.id = "row-<%=subject[i]%>-"+j
+      containerDiv = document.getElementById("<%=subject[i]%>")
+      containerDiv.appendChild(rowDiv)
+    }  
+  
+  <%}%>
+  var colCount = -1
+  var index = 0
+  <% for(var i = 0; i < nt.length ; i++) { %>
+  
+    var cln = document.createElement('div')
+    cln.className = "col-4"
+    cln.innerHTML = `
+    <div class = "card">
+    <form action="http://localhost:3000/pdf/<%= nt[i].filename %>" class="book" method="GET">
+    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"><%= nt[i].filename %></h5>
+            <p class="card-text"><%= nt[i].subject %></p>
+            <button type="submit" value='a' class = "btn btn-secondary" >OPEN </button>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+     </form>
+     </div>
+     `
     //cln.getElementsByTagName("p")[0].innerHTML = "<%= nt[i].filename %>";
     //console.log(cln.getElementsByTagName("p"))
     //console.log('<%=nt%>')
@@ -154,11 +191,33 @@ button{
     console.log("cln is" + '<%= nt[i].subject %>')
     //<%= nt[i].filename %>"
     //var td  = document.createElement('td')
-    if (document.getElementById('<%= nt[i].subject %>') != undefined)
-      var par = document.getElementById('<%= nt[i].subject %>')
-    console.log('sub is' + '<%= nt[i].subject %>')
+    var subjectName = "<%= nt[i].subject %>"
+    
+    if(colCount===3){
+      index++
+      colCount = 0
+    }
+    
+    if (document.getElementById(subjectName) != undefined){
+      console.log('row-' + subjectName + '-' + index)
+      var par = document.getElementById('row-'+subjectName+'-'+index)
+      
+    }
+    colCount++
     par.appendChild(cln);
+    change_sub(dropdown_selector)
   <%}%>
+  
+    function change_sub(sel){
+       var subList = document.getElementsByClassName("subject-list")
+       <% for (var i = 0; i <= subject.length - 1; i++) {%>
+          document.getElementById("<%=subject[i]%>").style.display = "none";
+          document.getElementById(sel.options[sel.selectedIndex].text).style.display = "block"
+         <%}%>
+     
+      }
+  
+
 </script>
 </body>
 </html>

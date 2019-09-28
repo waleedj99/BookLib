@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Textbooks</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign-up</title>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -16,72 +18,137 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <style>
-        button {
-            background-color: #FFFBE6;
-            border: none;
-        }
-    </style>
-
-
 </head>
-
-<body style="background-color:#FFFBE6;">
-
-    <nav class="navbar fixed-top navbar-expand-lg  navbar-dark "
-        style="background-image: linear-gradient( 109.6deg,  rgba(61,106,239,1) 11.2%, rgba(122,14,190,1) 70.2% );">
-        <a class="navbar-brand" href="/">BoLi</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<style>
+body{
+    height: 100vh;
+}
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(224,224,224);
+    color: black;
+    text-align: center;
+}
+.loginnn{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin: 7.5% 25%;
+}
+.loginnn img{
+    height: 7em;
+    padding: 5%;
+}
+.user-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">BookStore</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/">Home <span class="sr-only">(current)</span></a>
-                </li>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item ">
-                    <a class="nav-link" href="http://localhost:3000/textbook/?sem=3">TextBook</a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/notes/?sem=3">Notes</a>
+                    <a class="nav-link" href="/upload">Upload</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/about">About</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/notes" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Notes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/notes/?sem=3">3rd Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=4">4th Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=5">5th Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=6">6th Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=7">7th Sem</a>
+                        <a class="dropdown-item" href="/notes/?sem=8">8th Sem</a>
+                    </div>
                 </li>
-    
+                <li class="nav-item active dropdown">
+                    <a class="nav-link dropdown-toggle" href="/textbook" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Textbook
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/textbook/?sem=3">3rd Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=4">4th Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=5">5th Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=6">6th Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=7">7th Sem</a>
+                        <a class="dropdown-item" href="/textbook/?sem=8">8th Sem</a>
+                    </div>
+                </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/login">Login</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="http://localhost:3000/register">Register</a>
-                </li>
-    
-            </ul>
-    
+        <ul class="navbar-nav ml-auto">
+        
+            
+            <li class="nav-item ">
+                <a class="nav-link" href="http://localhost:3000/login">Login</a>
+            </li>
+            
+            
+        </ul>    
+        
+        
+            
+        
         </div>
     </nav>
-    <br>
-    <form action="#" method="POST" style="text-align:center; margin-top:15%;">
+    <div class="loginnn">
+        <div class="container">
+            <form action="#" method="POST">
+                <div class="user-icon">
+                    <img src="signup.png" alt="">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Username</label>
+                    <input type="text" class="form-control" name="username" placeholder="Enter Username" >
+                </div>
+                
+                <div class="form-group">
+                    <label for="semester">Select Semester</label>
+                    <select name = "semester" class="form-control" id="semester">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Enter Password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="c_password">Password</label>
+                    <input type="password" class="form-control" name="c_password" placeholder="Confirm Password" placeholder="Password">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Sign Up"><%= tagline %></form>
+               
+            </form>
+        </div>
+    </div>
 
-        
-        
-        Username:<br> <input type="text" name="username" placeholder="Enter Username" style="color:#356859;"><br>
-        Semester:<br><select name="semester">
-            <option value="3">III</option>
-            <option value="4">IV</option>
-            <option value="5">V</option>
-            <option value="6">VI</option>
-            <option value="7">V</option>
-            <option value="8">VI</option>
-        </select><br>
-        Password:<br><input type="password" name="password" placeholder="Enter Password" style="color:#356859;"><br>
-        Confirm Password:<br> <input type="password" name="c_password" placeholder="Confirm Password"
-            style="color:#356859;"><br><br>
-        <input type="submit" value="Sign Up"><%= tagline %></form>
-
+    <footer>
+        <p>©Untitled Inc</p>
+    </footer>
 </body>
 
 </html>

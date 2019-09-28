@@ -28,6 +28,12 @@ const SESS_SECRET = "something"
 const conn = mongoose.createConnection(url);
 var isLogin = false
 
+const thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Structures', 'Discrete Mathematics', 'Logic Design']
+const fourthSem = ['Algorithm Design', 'Microprocessors', "Operating System", 'Linux system programming']
+const fifthSem = ['Database Management Systems', 'Computer Networks']
+const sixthSem = ['Computer Graphics', 'Compilers', 'Internet and Web Technologies']
+const seventhSem = ['subject1', 'subject2', 'subject3']
+const eighthSem = ['subject4', 'subject5', 'subject6']
 
 app.use(
     session({
@@ -114,10 +120,7 @@ app.get('/notes', redirectLogin,(req,res)=>{
                     file.isNote = false;
                 }
             });
-            let thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Strutures', 'Discrete Mathematics','Logic Design']
-            let fourthSem = ['Algorithm Design', 'Microprocessors', "Operating Systems",'Linux system programming']
-            let fifthSem = ['Database Management Systems','Computer Networks']
-            let sixthSem = ['Computer Graphics','Compilers','Internet and Web Technologies']
+            
             switch (req.query.sem) {
                 case '3':
                     res.render('pages/notes', { files: files, sem:'3', subject: thirdSem } )
@@ -132,10 +135,10 @@ app.get('/notes', redirectLogin,(req,res)=>{
                     res.render('pages/notes', { files: files, sem: '6',subject: sixthSem })
                     break;
                 case '7':
-                    res.render('pages/notes', { files: files, sem: '7', subject: ['subject1', 'subject2', 'subject3'] })
+                    res.render('pages/notes', { files: files, sem: '7', subject: seventhSem })
                     break;
                 case '8':
-                    res.render('pages/notes', { files: files, sem: '8', subject: ['subject1', 'subject2', 'subject3'] })
+                    res.render('pages/notes', { files: files, sem: '8', subject: eighthSem })
                     break;
                 default:
                     res.render('pages/notes', { files: files })
@@ -159,10 +162,7 @@ app.get('/textbook', redirectLogin,(req,res)=>{
                     file.isTB = false;
                 }
             });
-            let thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Strutures', 'Discrete Mathematics', 'Logic Design']
-            let fourthSem = ['Algorithm Design', 'Microprocessors', "Operating System", 'Linux system programming']
-            let fifthSem = ['Database Management Systems', 'Computer Networks']
-            let sixthSem = ['Computer Graphics', 'Compilers', 'Internet and Web Technologies']
+            
             switch (req.query.sem) {
                 case '3':
                     res.render('pages/textbook', { files: files, sem: '3', subject: thirdSem })
@@ -177,10 +177,10 @@ app.get('/textbook', redirectLogin,(req,res)=>{
                     res.render('pages/textbook', { files: files, sem: '6', subject: sixthSem })
                     break;
                 case '7':
-                    res.render('pages/textbook', { files: files, sem: '7', subject: ['subject1', 'subject2', 'subject3'] })
+                    res.render('pages/textbook', { files: files, sem: '7', subject: seventhSem })
                     break;
                 case '8':
-                    res.render('pages/textbook', { files: files, sem: '8', subject: ['subject1', 'subject2', 'subject3'] })
+                    res.render('pages/textbook', { files: files, sem: '8', subject: eighthSem })
                     break;
                 default:
                     res.render('pages/textbook', { files: files })
@@ -243,7 +243,8 @@ app.get('/pdf/:filename', redirectLogin, (req, res) => {
 });
 
 app.get('/upload', redirectLogin, function (req, res){
-    res.render('pages/upload',{isLogin:isLogin})
+    
+    res.render('pages/upload')
 })
 
 app.post('/upload', upload.single('myFile'), (req, res) => {
@@ -375,14 +376,19 @@ var arr =[]
             })
             collection.createIndex({ "username": 1 }, { unique: true });
             console.log("Adding")
-            collection.insertOne({ username: req.body.username, password: req.body.password }, (err, item) => {
+            collection.insertOne({ username: req.body.username, password: req.body.password,user_sem:req.body.semester }, (err, item) => {
                 res.redirect('/login')
             })
             client.close()
         })
         }
-    else
-        res.send('Re_enter Password');
+    else{
+        var tagline = "Passwords don't match"
+        res.render('pages/register.ejs', {
+            tagline: tagline
+        })
+    }
+        
 
 })
 app.listen(3000);
