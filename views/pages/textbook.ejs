@@ -183,15 +183,25 @@
           cln.className = "col-4"
           cln.innerHTML = `
     <div class = "card">
-    <form action="http://localhost:3000/pdf/<%= tb[i].filename %>" class="book" method="GET">
+    
     <img class="card-img-top" src=".../100px180/" alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title"><%= tb[i].filename %></h5>
+          <h5 class="card-title"><%= tb[i].filename.substring(0,27) %></h5>
             <p class="card-text"><%= tb[i].subject %></p>
+            <div class="row">
+            <form action="http://localhost:3000/pdf/<%= tb[i].filename %>" class="book col" method="GET">
             <button type="submit" value='a' class = "btn btn-secondary" >OPEN </button>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </form>
+            <form class ="col" action="/save/<%= tb[i].filename %>/textbook" method="POST">
+            <button type="submit" value='save' class = "btn btn-secondary" >SAVE </button>
+            </form>
+            </div>
         </div>
-     </form>
+     
+     
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+             
+      
      </div>
      `
           //cln.getElementsByTagName("p")[0].innerHTML = "<%= tb[i].filename %>";

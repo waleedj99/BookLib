@@ -176,9 +176,13 @@ footer{
     <form action="http://localhost:3000/pdf/<%= nt[i].filename %>" class="book" method="GET">
     <img class="card-img-top" src=".../100px180/" alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title"><%= nt[i].filename %></h5>
+          <h5 class="card-title"><%= nt[i].filename.substring(0,27) %></h5>
             <p class="card-text"><%= nt[i].subject %></p>
-            <button type="submit" value='a' class = "btn btn-secondary" >OPEN </button>
+            <button type="submit" value='open' class = "btn btn-secondary" >OPEN </button>
+            <form action="/save/<%= nt[i].filename %>" method="post">
+              <button type="submit" value='save' class = "btn btn-secondary" >SAVE </button>
+            </form>
+            
             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
         </div>
      </form>
@@ -186,7 +190,7 @@ footer{
      `
     //cln.getElementsByTagName("p")[0].innerHTML = "<%= nt[i].filename %>";
     //console.log(cln.getElementsByTagName("p"))
-    //console.log('<%=nt%>')
+    //console.log('<%=nt%>')s
     cln.action = "pdf/<%= nt[i].filename %>";
     console.log("cln is" + '<%= nt[i].subject %>')
     //<%= nt[i].filename %>"

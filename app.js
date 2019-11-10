@@ -15,7 +15,8 @@ const crypto = require('crypto');
 //const path = require('path');
 var app = express();
 app.use(methodOverride('_method'));
-const url = //"mongodb+srv://waleed:Throwaway69@cluster0-iewfh.mongodb.net/test?retryWrites=true&w=majority"//
+//mongodb + srv://waleed:<password>@cluster0-iewfh.mongodb.net/admin?retryWrites=true&w=majority
+const url = //"mongodb+srv://waleed:Throwaway69@cluster0-iewfh.mongodb.net/test?retryWrites=true&w=majority"
 'mongodb://localhost:27017'
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -27,6 +28,7 @@ const IN_PROD = 'production'
 const SESS_SECRET = "something"
 const conn = mongoose.createConnection(url);
 var isLogin = false
+var loggedInUsername = ''
 
 const thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Structures', 'Discrete Mathematics', 'Logic Design']
 const fourthSem = ['Algorithm Design', 'Microprocessors', "Operating System", 'Linux system programming']
@@ -44,7 +46,7 @@ app.use(
         cookie:{
             maxAge:SESS_LIFETIME,
             sameSite:true,
-            secure:IN_PROD
+            secure:IN_PROD,
         }
         
     })
@@ -86,6 +88,7 @@ const storage = new GridFsStorage({
                 if (err) {
                     return reject(err);
                 }
+                console.log(file)
                 const filename = file.originalname//buf.toString('hex') + path.extname(file.originalname);
                 const fileInfo = {
                     filename: filename,
@@ -243,7 +246,6 @@ app.get('/pdf/:filename', redirectLogin, (req, res) => {
 });
 
 app.get('/upload', redirectLogin, function (req, res){
-    
     res.render('pages/upload')
 })
 
@@ -255,7 +257,7 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
         }
         console.log("Connexted bois")
         var db = client.db('admin')
-        
+
         //console.log(db)
         var collection = db.collection("uploads.files")
         //console.log(collection)
@@ -267,17 +269,88 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
                 {
                     semester: req.body.semester,
                     subject: req.body.subject,
-                    category: req.body.category
+                    category: req.body.category,
+                    uploader:loggedInUsername
                 }
             }
         )
-        
-
         client.close();
-        
+
         res.redirect('/')
+
+    })
+})
+
+app.post('/save/:filename/:type', redirectLogin,(req,res)=>{
+    mongo.connect(url, (err, client) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        console.log("Connexted bois")
+        var db = client.db('BookLib')
+        var collection = db.collection('savedBooks')
+        collection.createIndex({ username: 1, bookname:1},{unique:true})
+        collection.insertOne({ username: loggedInUsername, bookname: req.params.filename},(err,result)=>{
+            if(err){
+                return
+            }
+        })
+        res.redirect('/' + req.params.type +'/?sem=3')
         
-    })    
+    })
+})
+
+
+let saved = []
+let upl =[]
+app.get('/profile',function(req,res){
+    saved=[]
+    upl = []
+    mongo.connect(url, (err, client) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+
+        console.log("Connexted bois")
+        var db = client.db('BookLib')
+        var collection = db.collection('savedBooks')
+        collection.find({username:loggedInUsername}).toArray((err,files)=>{
+            files.forEach((element,index) => {
+                gfs.files.findOne({ filename: element.bookname },(err, file) => {
+                    // Check if file                    
+                    saved.push(file)
+                    if(index==files.length-1){
+                        res.render("pages/profile", { usem: usem, uname: loggedInUsername, sbooks: saved, ubooks: upl, isLogin: isLogin })
+                    }
+                   //res.send(saved)
+                })                
+                
+                //savedandupl.push(element)
+            });
+            
+        })
+        
+        client.close()
+    })
+
+    gfs.files.find({ uploader: loggedInUsername }).toArray((err, file) => {
+            // Check if file
+
+        file.forEach(element => {
+            upl.push(element)
+            
+        });
+        //console.log(savedandupl)
+        //res.send(savedandupl)
+            if (!file || file.length === 0) {
+                console.log(err)
+                return res.status(404).json({
+                    err: 'No file exists'
+                });
+            }
+    })
 })
 
 app.get('/download', function (req, res) {
@@ -304,37 +377,42 @@ app.get('/download', function (req, res) {
 })
 
 app.post('/login', function (req, res) {
-
-
     mongo.connect(url, (err, client) => {
         if (err) {
             console.error(err)
             return
         }
         console.log("Connexted bois")
-        var db = client.db('login')
-        var collection = db.collection(req.body.username)
-        collection.findOne({ username: req.body.username }, (err, item) => {
-            console.log("Founf" + item)
-            if (item.password == req.body.password){
-                isLogin = true
-                res.redirect('/')
+        var db = client.db('BookLib')
+        var collection = db.collection('loginInfo')
+        collection.findOne({ "username": req.body.username }, (err, item) => {
+            console.log(item.user_sem)
+            if(item!=null){
+                if (item.password == req.body.password){
+                    isLogin = true
+                    usem = item.user_sem
+                    loggedInUsername = req.body.username
+                    res.redirect('/')
+                }
+                else{
+                    isLogin = false
+                    res.send("Login Failed")
+                }
             }
             else{
-                isLogin = false
                 res.send("Login Failed")
-            }
-                
+            } 
         })
         client.close();
         })
     
 })
 
-
+let usem = "Same"
+let toInsert = false
 app.post('/register', function (req, res) {
 
-var arr =[]
+    var arr = []
     console.log("THis sIS THE sTArt");
     console.log(req.body)
     if (req.body.password == req.body.c_password) {
@@ -344,51 +422,41 @@ var arr =[]
                 console.error(err)
                 return
             }
+            
             console.log("Connexted bois")
-            var db = client.db('login')
-            var collection = db.collection(req.body.username)
-            db.listCollections().toArray(function (err, collInfos) {
-                // collInfos is an array of collection info objects that look like:
-                collInfos.forEach((ele) => {
-                    //console.log(ele.name);
-                    arr.push(ele.name)
-                });
-
-                console.log(arr)
-                //collection.createIndex({ "username": 1 }, { unique: true });
-                n = arr.includes(req.body.username)
-                
-                if (n) {
-                    var tagline = "Username Taken"
-                    res.render('pages/register.ejs', {  
-                        tagline: tagline
-                    })
-                    console.log("Duplicate")
-                    
-                    //res.redirect('\dup')
-                } else {
-                    console.log("Adding")
-                    //var tagline = "Press Submit"
-                    //res.render('pages/login.ejs')
-                    console.log("Duplicate")
-                    //res.redirect('\login')
+            var db = client.db('BookLib')
+            var collection = db.collection('loginInfo')
+            collection.findOne({ username: req.body.username},(err,result)=>{
+                if(result!=null){
+                    toInsert = true
+                }else{
+                    toInsert = false
                 }
-            })
+            })   
+            
+            console.log('toInsert is'+toInsert)
             collection.createIndex({ "username": 1 }, { unique: true });
             console.log("Adding")
-            collection.insertOne({ username: req.body.username, password: req.body.password,user_sem:req.body.semester }, (err, item) => {
-                res.redirect('/login')
-            })
+            
+                if(toInsert==true){
+                    collection.insertOne({ username: req.body.username, password: req.body.password, user_sem: req.body.semester })
+                    res.redirect('/login')
+                }
+                else{
+                    var tagline = "Username taken"
+                    res.render('pages/register.ejs', {
+                        tagline: tagline
+                    })
+                }
+            
             client.close()
         })
-        }
-    else{
+    }
+    else {
         var tagline = "Passwords don't match"
         res.render('pages/register.ejs', {
             tagline: tagline
         })
     }
-        
-
 })
 app.listen(3000);
