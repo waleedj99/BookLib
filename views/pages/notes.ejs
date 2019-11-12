@@ -173,24 +173,22 @@ footer{
     cln.className = "col-4"
     cln.innerHTML = `
     <div class = "card">
-    <form action="http://localhost:3000/pdf/<%= nt[i].filename %>" class="book" method="GET">
-    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title"><%= nt[i].filename.substring(0,27) %></h5>
             <p class="card-text"><%= nt[i].subject %></p>
+             <div class="row">
+            <form action="http://localhost:3000/pdf/<%= nt[i].filename %>" class="book col" method="GET">
             <button type="submit" value='open' class = "btn btn-secondary" >OPEN </button>
-            <form action="/save/<%= nt[i].filename %>" method="post">
+            </form>
+            <form action="/save/<%= nt[i].filename %>/notes" class="book col" method="POST">
               <button type="submit" value='save' class = "btn btn-secondary" >SAVE </button>
             </form>
-            
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          
         </div>
-     </form>
+     
      </div>
      `
-    //cln.getElementsByTagName("p")[0].innerHTML = "<%= nt[i].filename %>";
-    //console.log(cln.getElementsByTagName("p"))
-    //console.log('<%=nt%>')s
     cln.action = "pdf/<%= nt[i].filename %>";
     console.log("cln is" + '<%= nt[i].subject %>')
     //<%= nt[i].filename %>"

@@ -22,21 +22,27 @@
 <style>
 body{
     height: 100vh;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradientBG 15s ease infinite;
 }
-footer{
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: rgb(224,224,224);
-    color: black;
-    text-align: center;
+@keyframes gradientBG {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
+
 .loginnn{
     display: grid;
     justify-content: center;
     align-items: center;
-    margin: 7.5% 25%;
+    margin: 3.5% 25%;
 }
 .loginnn img{
     height: 7em;
@@ -146,9 +152,7 @@ footer{
         </div>
     </div>
 
-    <footer>
-        <p>©Untitled Inc</p>
-    </footer>
+    
 </body>
 
 </html>

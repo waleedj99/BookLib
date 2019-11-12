@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
   <style>
-  body{
+    body{
     height: 100vh;
+    
 }
+
 .griddd{
     padding-top: 5%;
     padding-bottom: 0%;
@@ -21,7 +23,6 @@ footer{
     color: black;
     text-align: center;
 }
-
   </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -109,7 +110,7 @@ footer{
                             <div class="col-sm-3"><!-- Default switch -->
                                 <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" onclick="toggleView(this.checked)" id="customSwitches">
-                                <label class="custom-control-label" for="customSwitches">Your Uploads</label>
+                                <label id ="name-label" class="custom-control-label" for="customSwitches">Saved Files</label>
                                 </div>
                             </div>
                     </div>
@@ -129,13 +130,14 @@ footer{
       if (value==true) {
         document.getElementById("type-0").style.display = "block"
         document.getElementById("type-1").style.display = "none"
+        document.getElementById("name-label").innerHTML = 'Saved Files'
       } else {
         document.getElementById("type-1").style.display = "block"
         document.getElementById("type-0").style.display = "none"
+        document.getElementById("name-label").innerHTML = 'Uploaded Files'
       }
     }
-      
-
+   
 
         <% for (var i = 0; i < 2; i++) {%>  
           var tr = document.createElement('div')
@@ -164,7 +166,6 @@ footer{
          cln.innerHTML = `
             <div class = "card">
     
-    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title"><%= tb.filename.substring(0,27) %></h5>
             <p class="card-text"><%= tb.subject %></p>
@@ -172,8 +173,8 @@ footer{
             <form action="http://localhost:3000/pdf/<%= tb.filename %>" class="book col" method="GET">
             <button type="submit" value='a' class = "btn btn-secondary" >OPEN </button>
             </form>
-            <form class ="col" action="/save/<%= tb.filename %>/textbook" method="POST">
-            <button type="submit" value='save' class = "btn btn-secondary" >SAVE </button>
+            <form class ="col" action="/unsave/<%= tb.filename %>/textbook" method="POST">
+            <button type="submit" value='save' class = "btn btn-secondary" >UNSAVE </button>
             </form>
             </div>
         </div>
@@ -186,9 +187,7 @@ footer{
          var cln = document.createElement('div')
         cln.className = "col-4"
         cln.innerHTML = `
-            <div class = "card">
-    
-    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+      <div class = "card">
         <div class="card-body">
           <h5 class="card-title"><%= tb.filename.substring(0,27) %></h5>
             <p class="card-text"><%= tb.subject %></p>
@@ -196,15 +195,13 @@ footer{
             <form action="http://localhost:3000/pdf/<%= tb.filename %>" class="book col" method="GET">
             <button type="submit" value='a' class = "btn btn-secondary" >OPEN </button>
             </form>
-            <form class ="col" action="/save/<%= tb.filename %>/textbook" method="POST">
-            <button type="submit" value='save' class = "btn btn-secondary" >SAVE </button>
-            </form>
             </div>
         </div>
             `
         document.getElementById('row-u-' + Math.floor(<%=index %> /3)).appendChild(cln)
 
           <% }); %>
-        
+         console.log(document.getElementById("customSwitches").checked)
+          toggleView(document.getElementById("customSwitches").checked)
   </script>
 </html>

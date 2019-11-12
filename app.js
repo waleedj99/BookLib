@@ -5,14 +5,11 @@ const mongo = require('mongodb').MongoClient
 var assert = require('assert');
 var fs = require('fs');
 var session = require('express-session')
-//var formidable = require('formidable');
-const pdf = require('pdf-thumbnail');
 const mongoose = require('mongoose');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const multer = require('multer')
 const crypto = require('crypto');
-//const path = require('path');
 var app = express();
 app.use(methodOverride('_method'));
 //mongodb + srv://waleed:<password>@cluster0-iewfh.mongodb.net/admin?retryWrites=true&w=majority
@@ -26,7 +23,7 @@ const SESS_LIFETIME = 1000*60*60*2
 const SESS_NAME = 'ses1'
 const IN_PROD = 'production'
 const SESS_SECRET = "something"
-const conn = mongoose.createConnection(url);
+const conn = mongoose.createConnection(url);//Connect to database
 var isLogin = false
 var loggedInUsername = ''
 
@@ -101,6 +98,26 @@ const storage = new GridFsStorage({
     }
 });
 const upload = multer({ storage });
+
+app.get('/', redirectLogin, (req, res) => {
+
+    gfs.files.find().toArray((err, files) => {
+
+        // Check if files
+        if (!files || files.length === 0) {
+            res.render('pages/index', { files: false });
+        } else {
+            files.map(file => {
+                if (file.contentType === 'application/pdf' || file.contentType === 'application/pdf') {
+                    file.isPdf = true;
+                } else {
+                    file.isPdf = false;
+                }
+            });
+            res.render('pages/index', { files: files });
+        }
+    });
+});
 
 app.get('/register', redirectHome, function (req, res) {
     var tagline = ''
@@ -192,27 +209,7 @@ app.get('/textbook', redirectLogin,(req,res)=>{
     });
 })
 
-app.get('/', redirectLogin ,(req, res) => {
-    
-    gfs.files.find().toArray((err, files) => {
-        
-        // Check if files
-        if (!files || files.length === 0) {
-            res.render('pages/index', { files: false });
-        } else {
-            files.map(file => {
-                if ( file.contentType === 'application/pdf' || file.contentType === 'application/pdf') 
-                {
-                    file.isPdf = true;
-                } else 
-                {
-                    file.isPdf = false;
-                }
-            });
-            res.render('pages/index', {files:files });
-        }
-    });
-});
+
 
 app.get('/login',redirectHome, function (req, res) {
     res.render('pages/login.ejs');
@@ -255,7 +252,7 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
             console.error(err)
             return
         }
-        console.log("Connexted bois")
+        
         var db = client.db('admin')
 
         //console.log(db)
@@ -281,13 +278,15 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
     })
 })
 
+
+
+
 app.post('/save/:filename/:type', redirectLogin,(req,res)=>{
     mongo.connect(url, (err, client) => {
         if (err) {
             console.error(err)
             return
         }
-        console.log("Connexted bois")
         var db = client.db('BookLib')
         var collection = db.collection('savedBooks')
         collection.createIndex({ username: 1, bookname:1},{unique:true})
@@ -302,18 +301,55 @@ app.post('/save/:filename/:type', redirectLogin,(req,res)=>{
 })
 
 
-let saved = []
-let upl =[]
-app.get('/profile',function(req,res){
-    saved=[]
-    upl = []
+
+app.post('/unsave/:filename/:type', redirectLogin, (req, res) => {
     mongo.connect(url, (err, client) => {
         if (err) {
             console.error(err)
             return
         }
+        var db = client.db('BookLib')
+        var collection = db.collection('savedBooks')
+        collection.createIndex({ username: 1, bookname: 1 }, { unique: true })
+        collection.deleteOne({ username: loggedInUsername, bookname: req.params.filename }, (err, result) => {
+            if (err) {
+                return
+            }
+        })
+        res.redirect('/profile')
 
-        console.log("Connexted bois")
+    })
+})
+
+let saved = []
+let upl =[]
+app.get('/profile',function(req,res){
+    saved=[]
+    upl = []
+
+
+    gfs.files.find({ uploader: loggedInUsername }).toArray((err, file) => {
+        // Check if file
+
+        file.forEach(element => {
+            upl.push(element)
+
+        });
+        //console.log(savedandupl)
+        //res.send(savedandupl)
+        if (!file || file.length === 0) {
+            console.log(err)
+            return res.status(404).json({
+                err: 'No file exists'
+            });
+        }
+    })
+    mongo.connect(url, (err, client) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        var renderSent = false
         var db = client.db('BookLib')
         var collection = db.collection('savedBooks')
         collection.find({username:loggedInUsername}).toArray((err,files)=>{
@@ -321,12 +357,15 @@ app.get('/profile',function(req,res){
                 gfs.files.findOne({ filename: element.bookname },(err, file) => {
                     // Check if file                    
                     saved.push(file)
-                    if(index==files.length-1){
+                    console.log(file)
+                    if (index == files.length - 1) {
+                        renderSent = true
                         res.render("pages/profile", { usem: usem, uname: loggedInUsername, sbooks: saved, ubooks: upl, isLogin: isLogin })
                     }
+                    
                    //res.send(saved)
-                })                
-                
+                })           
+                console.log(index)     
                 //savedandupl.push(element)
             });
             
@@ -335,45 +374,7 @@ app.get('/profile',function(req,res){
         client.close()
     })
 
-    gfs.files.find({ uploader: loggedInUsername }).toArray((err, file) => {
-            // Check if file
-
-        file.forEach(element => {
-            upl.push(element)
-            
-        });
-        //console.log(savedandupl)
-        //res.send(savedandupl)
-            if (!file || file.length === 0) {
-                console.log(err)
-                return res.status(404).json({
-                    err: 'No file exists'
-                });
-            }
-    })
-})
-
-app.get('/download', function (req, res) {
-    res.sendFile(__dirname + '/textbook.html')
-    mongo.MongoClient.connect(url, function (error, client) {
-        assert.ifError(error);
-        var db = client.db('upload')
-        //var bucket = new mongodb.GridFSBucket(db);
-        var bucket = new mongo.GridFSBucket(db, {
-            chunkSizeBytes: 1024,
-            bucketName: 'songs'
-        });
-        bucket.openDownloadStreamByName('module5 (2).docx').
-            pipe(fs.createWriteStream('./mod.docx')).
-            on('error', function (error) {
-                assert.ifError(error);
-            }).
-            on('finish', function () {
-                console.log('done!');
-                //process.exit(0);
-            });
-        //client.close()
-    })
+    
 })
 
 app.post('/login', function (req, res) {
@@ -382,11 +383,9 @@ app.post('/login', function (req, res) {
             console.error(err)
             return
         }
-        console.log("Connexted bois")
         var db = client.db('BookLib')
         var collection = db.collection('loginInfo')
         collection.findOne({ "username": req.body.username }, (err, item) => {
-            console.log(item.user_sem)
             if(item!=null){
                 if (item.password == req.body.password){
                     isLogin = true
@@ -409,10 +408,8 @@ app.post('/login', function (req, res) {
 })
 
 let usem = "Same"
-let toInsert = false
+let toInsert = true
 app.post('/register', function (req, res) {
-
-    var arr = []
     console.log("THis sIS THE sTArt");
     console.log(req.body)
     if (req.body.password == req.body.c_password) {
@@ -422,8 +419,6 @@ app.post('/register', function (req, res) {
                 console.error(err)
                 return
             }
-            
-            console.log("Connexted bois")
             var db = client.db('BookLib')
             var collection = db.collection('loginInfo')
             collection.findOne({ username: req.body.username},(err,result)=>{
@@ -433,11 +428,7 @@ app.post('/register', function (req, res) {
                     toInsert = false
                 }
             })   
-            
-            console.log('toInsert is'+toInsert)
             collection.createIndex({ "username": 1 }, { unique: true });
-            console.log("Adding")
-            
                 if(toInsert==true){
                     collection.insertOne({ username: req.body.username, password: req.body.password, user_sem: req.body.semester })
                     res.redirect('/login')
