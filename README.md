@@ -1,9 +1,9 @@
 # BookLib
 Make sure NPM is installed 
-install from https://www.npmjs.com/get-npm
-Online Book library  , using which students can get Textbooks for their respective subjects
-WebDev CLub Mini Project
-To Use 
+install from https://www.npmjs.com/get-npm<br/>
+Online Book library  , using which students can get Textbooks for their respective subjects<br/>
+WebDev CLub Mini Project<br/>
+To Use <br/>
 - clone/Download the repo
 - In the terminal go to the folder in which the repo is downloaded
 - enter npm start
