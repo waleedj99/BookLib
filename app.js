@@ -13,7 +13,7 @@ const crypto = require('crypto');
 var app = express();
 app.use(methodOverride('_method'));
 //mongodb + srv://waleed:<password>@cluster0-iewfh.mongodb.net/admin?retryWrites=true&w=majority
-const url = //"mongodb+srv://waleed:Throwaway69@cluster0-iewfh.mongodb.net/test?retryWrites=true&w=majority"
+const url = "mongodb+srv://waleed:Throwaway69@cluster0-iewfh.mongodb.net/test?retryWrites=true&w=majority"
 'mongodb://localhost:27017'
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
