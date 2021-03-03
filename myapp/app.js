@@ -31,8 +31,8 @@ const thirdSem = ['Computer Organisation', 'OOPs with Java', 'Data Structures', 
 const fourthSem = ['Algorithm Design', 'Microprocessors', "Operating System", 'Linux system programming']
 const fifthSem = ['Database Management Systems', 'Computer Networks']
 const sixthSem = ['Computer Graphics', 'Compilers', 'Internet and Web Technologies']
-const seventhSem = ['subject1', 'subject2', 'subject3']
-const eighthSem = ['subject4', 'subject5', 'subject6']
+const seventhSem = ['Object Modelling and Design', 'Advanced Computer Architecture', 'Embedded Computing System']
+const eighthSem = ['Machine Learning', 'Python', 'Big Data']
 
 app.use(
     session({
