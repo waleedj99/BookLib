@@ -88,14 +88,14 @@ footer{
       
         <% if(locals.isLogin){%>
         <li class="nav-item ">
-          <a class="nav-link" href="http://localhost:3000/login">Login</a>
+          <a class="nav-link" href="/login">Login</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="http://localhost:3000/register">Register</a>
+          <a class="nav-link" href="/register">Register</a>
         </li>
         <% }else{%>
         <li class="nav-item ">
-          <a class="nav-link" href="http://localhost:3000/profile">Profile</a>
+          <a class="nav-link" href="/profile">Profile</a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" href="/logout">Log Out</a>
@@ -177,7 +177,7 @@ footer{
           <h5 class="card-title"><%= nt[i].filename.substring(0,27) %></h5>
             <p class="card-text"><%= nt[i].subject %></p>
              <div class="row">
-            <form action="http://localhost:3000/pdf/<%= nt[i].filename %>" class="book col" method="GET">
+            <form action="/pdf/<%= nt[i].filename %>" class="book col" method="GET">
             <button type="submit" value='open' class = "btn btn-secondary" >OPEN </button>
             </form>
             <form action="/save/<%= nt[i].filename %>/notes" class="book col" method="POST">
