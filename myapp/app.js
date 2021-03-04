@@ -10,6 +10,7 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const multer = require('multer')
 const crypto = require('crypto');
+const { time } = require('console');
 var app = express();
 app.use(methodOverride('_method'));
 //mongodb + srv://waleed:<password>@cluster0-iewfh.mongodb.net/admin?retryWrites=true&w=majority
@@ -33,6 +34,11 @@ const fifthSem = ['Database Management Systems', 'Computer Networks']
 const sixthSem = ['Computer Graphics', 'Compilers', 'Internet and Web Technologies']
 const seventhSem = ['Object Modelling and Design', 'Advanced Computer Architecture', 'Embedded Computing System']
 const eighthSem = ['Machine Learning', 'Python', 'Big Data']
+
+function timer(ms) {
+    return new Promise(res => setTimeout(res, ms));
+}
+
 
 app.use(
     session({
@@ -246,6 +252,8 @@ app.get('/upload', redirectLogin, function (req, res){
     res.render('pages/upload')
 })
 
+
+
 app.post('/upload', upload.single('myFile'), (req, res) => {
     mongo.connect(url, (err, client) => {
         if (err) {
@@ -253,25 +261,27 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
             return
         }
         
-        var db = client.db('admin')
+            var db = client.db('test')
 
-        //console.log(db)
-        var collection = db.collection("uploads.files")
-        //console.log(collection)
-        console.log("req is " + req.body.semester)
-        collection.updateOne(
-            { filename: req.file.filename },
-            {
-                $set:
+            //console.log(db)
+            var collection = db.collection("uploads.files")
+            //console.log(collection)
+            console.log("req is " + req.body.semester)
+            collection.updateOne(
+                { filename: req.file.filename },
                 {
-                    semester: req.body.semester,
-                    subject: req.body.subject,
-                    category: req.body.category,
-                    uploader:loggedInUsername
+                    $set:
+                    {
+                        semester: req.body.semester,
+                        subject: req.body.subject,
+                        category: req.body.category,
+                        uploader: loggedInUsername
+                    }
                 }
-            }
-        )
-        client.close();
+            )
+            client.close();
+        
+        
 
         res.redirect('/')
 

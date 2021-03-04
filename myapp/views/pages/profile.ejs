@@ -161,26 +161,29 @@ footer{
               containerDiv.appendChild(rowDiv)
        }
        <%locals.sbooks.forEach((tb,index) => {%>
+        
          var cln = document.createElement('div')
          cln.className = "col-4"
-         cln.innerHTML = `
+         <% if(tb!=null){ %>
+          cln.innerHTML = `
+          
             <div class = "card">
-    
-        <div class="card-body">
-          <h5 class="card-title"><%= tb.filename.substring(0,27) %></h5>
-            <p class="card-text"><%= tb.subject %></p>
-            <div class="row">
-            <form action="/pdf/<%= tb.filename %>" class="book col" method="GET">
-            <button type="submit" value='a' class = "btn btn-secondary" >OPEN </button>
-            </form>
-            <form class ="col" action="/unsave/<%= tb.filename %>/textbook" method="POST">
-            <button type="submit" value='save' class = "btn btn-secondary" >UNSAVE </button>
-            </form>
+                  
+            <div class="card-body">
+              <h5 class="card-title"><%= tb.filename.substring(0,27) %></h5>
+                <p class="card-text"><%= tb.subject %></p>
+                <div class="row">
+                <form action="/pdf/<%= tb.filename %>" class="book col" method="GET">
+                <button type="submit" value='a' class = "btn btn-secondary" >OPEN </button>
+                </form>
+                <form class ="col" action="/unsave/<%= tb.filename %>/textbook" method="POST">
+                <button type="submit" value='save' class = "btn btn-secondary" >UNSAVE </button>
+                </form>
+                </div>
             </div>
-        </div>
-            `
-        document.getElementById('row-s-'+Math.floor(<%=index%>/3)).appendChild(cln)
-
+                `
+            document.getElementById('row-s-' + Math.floor(<%=index %> /3)).appendChild(cln)
+         <% } %>
       <% }); %>
 
       <% locals.ubooks.forEach((tb, index) => {%>
