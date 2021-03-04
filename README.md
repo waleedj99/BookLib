@@ -37,6 +37,6 @@ Registeration Page
 Profile Page Showing Uploaded books
 ![](https://i.imgur.com/o9NGmkY.png)
 <br/><br/>
-The Notes page where all the books that are catrgorized as notes are shown , along
+The Notes page where all the books that are catrgorized as notes are shown along
 with their respective subjects
 ![](https://i.imgur.com/KPowHot.png)
