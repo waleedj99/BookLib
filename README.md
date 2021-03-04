@@ -9,6 +9,8 @@ To Use
 - enter npm start
 - enter nodemon app
 - In the browser go to http://localhost:3000
+- use username : pcsdemo
+- password:qwerty
 
 
 
