@@ -12,7 +12,7 @@
     "formidable": "^1.2.1",
     "fs": "0.0.1-security",
     "gridfs-stream": "^1.1.1",
-    "jsdom": "^14.0.0",
+    "jsdom": "^24.0.0",
     "method-override": "^3.0.0",
     "mongodb": "^3.2.3",
     "mongoose": "^5.7.5",
